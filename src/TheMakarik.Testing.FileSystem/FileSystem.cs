@@ -2,47 +2,90 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TheMakarik.Testing.FileSystem.Arrangement;
+using TheMakarik.Testing.FileSystem.Core;
 
-namespace Arrange.FileSystem;
+namespace TheMakarik.Testing.FileSystem;
 
-public class FileSystem : IDisposable, IEnumerable<FileSystemInfo>
+public sealed class FileSystem : IFileSystem
 {
-    private readonly bool _isTemp;
+    #region Static IFileSystemBuilder constructor
 
-    public DirectoryInfo Directory { get; }
-
-    internal FileSystem(DirectoryInfo directory, bool isTemp)
+    /// <summary>
+    /// Static <see cref="IFileSystemBuilder"/> constructor
+    /// </summary>
+    /// <returns>A new instance of <see cref="IFileSystemBuilder"/></returns>
+    public static IFileSystemBuilder BeginBuilding()
     {
-        Directory = directory;
-        _isTemp = isTemp;
+        return new FileSystemBuilder();
     }
 
-    public static FileSystemBuilder Begin(string? name = null)
+    #endregion
+   
+    #region IFileSystem implementation
+    
+    public string RootPath { get; }
+    
+    public IFileSystemAssertion Should()
     {
-        string tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-        if (!string.IsNullOrEmpty(name))
-            tempDir = Path.Combine(tempDir, name);
-
-        DirectoryInfo directory = new DirectoryInfo(tempDir);
-        directory.Create();
-
-        return new FileSystemBuilder(directory, true);
+        throw new NotImplementedException();
+    }
+    
+    #endregion
+    
+    
+    #region ICollection implementation
+    
+    public int Count { get; }
+    public bool IsReadOnly => true;
+    
+    public IEnumerator<string> GetEnumerator()
+    {
+        throw new NotImplementedException();
     }
 
-    public void Destroy()
+    IEnumerator IEnumerable.GetEnumerator()
     {
-        if (_isTemp && Directory.Exists)
-        {
-            Directory.Delete(true);
-        }
+        return GetEnumerator();
     }
+
+    public void Add(string item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool Contains(string item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void CopyTo(string[] array, int arrayIndex)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool Remove(string item)
+    {
+        throw new NotImplementedException();
+    }
+
+  
+
+    #endregion
+  
+
+    #region IDisposable implementation
 
     public void Dispose()
     {
-        Destroy();
-        GC.SuppressFinalize(this);
+        // TODO release managed resources here
     }
 
-    public IEnumerator<FileSystemInfo> GetEnumerator() => Directory.EnumerateFileSystemInfos().GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    #endregion
+    
 }
