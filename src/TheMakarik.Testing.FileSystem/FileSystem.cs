@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TheMakarik.Testing.FileSystem.Arrangement;
 using TheMakarik.Testing.FileSystem.Core;
 
@@ -9,6 +10,13 @@ namespace TheMakarik.Testing.FileSystem;
 
 public sealed class FileSystem : IFileSystem
 {
+    #region Fields
+
+    private string[] _fileSystemContent;
+    
+    #endregion
+    
+    
     #region Static IFileSystemBuilder constructor
 
     /// <summary>
@@ -21,10 +29,20 @@ public sealed class FileSystem : IFileSystem
     }
 
     #endregion
+    
+    #region Construtors
+
+    internal FileSystem(string root, IEnumerable<string> content)
+    {
+        this.RootPath = root;
+        this._fileSystemContent = content.ToArray();
+    }
+    #endregion
    
     #region IFileSystem implementation
     
-    public string RootPath { get; }
+    public int Count =>  this._fileSystemContent.Length;
+    public string RootPath { get; private set; }
     
     public IFileSystemAssertion Should()
     {
@@ -33,49 +51,21 @@ public sealed class FileSystem : IFileSystem
     
     #endregion
     
+    #region IEnumerable implementation
     
-    #region ICollection implementation
+   
     
-    public int Count { get; }
-    public bool IsReadOnly => true;
     
     public IEnumerator<string> GetEnumerator()
     {
-        throw new NotImplementedException();
+        return this._fileSystemContent.AsEnumerable().GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return GetEnumerator();
+        return this.GetEnumerator();
     }
-
-    public void Add(string item)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool Contains(string item)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void CopyTo(string[] array, int arrayIndex)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool Remove(string item)
-    {
-        throw new NotImplementedException();
-    }
-
-  
-
+    
     #endregion
   
 
@@ -83,7 +73,7 @@ public sealed class FileSystem : IFileSystem
 
     public void Dispose()
     {
-        // TODO release managed resources here
+        Directory.Delete(this.RootPath, recursive: true);
     }
 
     #endregion
