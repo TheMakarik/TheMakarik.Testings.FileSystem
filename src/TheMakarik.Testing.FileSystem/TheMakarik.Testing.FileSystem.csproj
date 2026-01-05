@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<RootNamespace>Arrange.FileSystem</RootNamespace>
     </PropertyGroup>
 
 </Project>
