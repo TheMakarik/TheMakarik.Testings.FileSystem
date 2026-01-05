@@ -20,12 +20,6 @@ public class AddingDirectoryWithContent
             .Build();
     }
 
-    [Test]
-    public void Test1()
-    {
-        Assert.Pass();
-    }
-
 
     [TearDown]
     public void TearDown()
