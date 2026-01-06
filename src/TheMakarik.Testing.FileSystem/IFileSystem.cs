@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TheMakarik.Testing.FileSystem.Arrangement;
+using TheMakarik.Testing.FileSystem.Assertion;
 
 namespace TheMakarik.Testing.FileSystem;
 
@@ -9,12 +9,6 @@ namespace TheMakarik.Testing.FileSystem;
 /// </summary>
 public interface IFileSystem : IDisposable, IEnumerable<string>
 {
-   
-    /// <summary>
-    /// Represent the count of the elements at the file system
-    /// </summary>
-    public int Count { get; }
-    
     /// <summary>
     /// Root file system folder's path where all <see cref="IFileSystem"/> content contains
     /// </summary>

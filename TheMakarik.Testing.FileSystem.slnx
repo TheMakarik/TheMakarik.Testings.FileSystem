@@ -5,4 +5,7 @@
   <Folder Name="/src/">
     <Project Path="src/TheMakarik.Testing.FileSystem/TheMakarik.Testing.FileSystem.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TheMakarik.Testing.FileSystem.Tests/TheMakarik.Testing.FileSystem.Tests.csproj" />
+  </Folder>
 </Solution>

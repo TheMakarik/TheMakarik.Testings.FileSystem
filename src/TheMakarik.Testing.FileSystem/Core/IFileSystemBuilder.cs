@@ -24,18 +24,7 @@ public interface IFileSystemBuilder
     /// </exception>
     string RootDirectory { get; }
 
-    /// <summary>
-    /// Gets the list of all relative paths that have been added to the file system.
-    /// </summary>
-    /// <value>
-    /// A read-only list of relative paths from the root directory.
-    /// Each entry represents a file or directory that will be created when <see cref="Build"/> is called.
-    /// </value>
-    /// <remarks>
-    /// This property can be used to inspect what has been added to the builder
-    /// without actually creating the file system elements.
-    /// </remarks>
-    List<string> Content { get; }
+  
 
     /// <summary>
     /// Sets the root directory for the file system being built.

@@ -3,19 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TheMakarik.Testing.FileSystem.Arrangement;
+using TheMakarik.Testing.FileSystem.Assertion;
 using TheMakarik.Testing.FileSystem.Core;
 
 namespace TheMakarik.Testing.FileSystem;
 
 public sealed class FileSystem : IFileSystem
 {
-    #region Fields
-
-    private string[] _fileSystemContent;
-    
-    #endregion
-    
     
     #region Static IFileSystemBuilder constructor
 
@@ -32,16 +26,14 @@ public sealed class FileSystem : IFileSystem
     
     #region Construtors
 
-    internal FileSystem(string root, IEnumerable<string> content)
+    internal FileSystem(string root)
     {
         this.RootPath = root;
-        this._fileSystemContent = content.ToArray();
     }
+    
     #endregion
    
     #region IFileSystem implementation
-    
-    public int Count =>  this._fileSystemContent.Length;
     public string RootPath { get; private set; }
     
     public IFileSystemAssertion Should()
@@ -53,12 +45,10 @@ public sealed class FileSystem : IFileSystem
     
     #region IEnumerable implementation
     
-   
-    
     
     public IEnumerator<string> GetEnumerator()
     {
-        return this._fileSystemContent.AsEnumerable().GetEnumerator();
+        return EnumerateRootContent().GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -76,6 +66,18 @@ public sealed class FileSystem : IFileSystem
         Directory.Delete(this.RootPath, recursive: true);
     }
 
+    #endregion
+    
+    #region Private methods
+    
+    private IEnumerable<string> EnumerateRootContent()
+    {
+        return Directory
+            .EnumerateDirectories(this.RootPath)
+            .Concat(Directory.EnumerateFiles(this.RootPath)
+            ).ToArray();
+    }
+    
     #endregion
     
 }

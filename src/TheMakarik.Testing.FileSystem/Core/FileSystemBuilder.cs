@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using TheMakarik.Testing.FileSystem.Objects;
 
 namespace TheMakarik.Testing.FileSystem.Core;
 
@@ -12,21 +14,12 @@ namespace TheMakarik.Testing.FileSystem.Core;
 /// This class is responsible for building a hierarchical file system structure in a temporary location.
 /// It tracks all created files and directories and ensures proper cleanup on disposal.
 /// </remarks>
-/// <example>
-/// <code>
-/// var fs = new FileSystemBuilder()
-///     .AddRoot(@"C:\Temp\Test")
-///     .AddFile("test.txt", (path, builder) => File.WriteAllText(path, "content"))
-///     .AddDirectory("subdir", (path, builder) => builder.AddFile("nested.txt"))
-///     .Build();
-/// </code>
-/// </example>
-public class FileSystemBuilder : IFileSystemBuilder
+public sealed class FileSystemBuilder : IFileSystemBuilder
 {
     #region Fields
 
     private string? _root;
-    private HashSet<Action<string, IFileSystemBuilder>> _builderActions = new(capacity: 10);
+    private HashSet<FileSystemCreationalContent> _builderActions = new(capacity: 10);
     
     #endregion
     
@@ -41,16 +34,6 @@ public class FileSystemBuilder : IFileSystemBuilder
     /// </exception>
     public string RootDirectory => _root ?? throw
         new InvalidOperationException("Cannot get the root directory because it is not declared, use AddRoot(path) method to declare");
-
-    /// <summary>
-    /// Gets the list of all relative paths that have been added to the file system.
-    /// </summary>
-    /// <value>A list of relative paths from the root directory.</value>
-    /// <remarks>
-    /// This collection tracks all files and directories added through the builder.
-    /// Paths are stored as relative to the root directory.
-    /// </remarks>
-    public List<string> Content { get; } = new(capacity: 10);
 
     #endregion
 
@@ -95,8 +78,7 @@ public class FileSystemBuilder : IFileSystemBuilder
     public IFileSystemBuilder Add(string rootRelativePath, Action<string, IFileSystemBuilder> additionalAction)
     {
         Guard.AgainstNull(rootRelativePath);
-        Content.Add(rootRelativePath);
-        this._builderActions.Add(additionalAction);
+        this._builderActions.Add(new FileSystemCreationalContent(additionalAction, rootRelativePath));
         return this;
     }
 
@@ -124,7 +106,7 @@ public class FileSystemBuilder : IFileSystemBuilder
         try
         {
             foreach (var action in this._builderActions)
-                action.Invoke(this.RootDirectory, this);
+                action.InvokeBuildingAction(this);
         }
         catch (Exception e)
         {
@@ -132,7 +114,7 @@ public class FileSystemBuilder : IFileSystemBuilder
             throw;
         }
        
-        return new FileSystem(this.RootDirectory, this.Content);
+        return new FileSystem(this.RootDirectory);
     }
     
     #endregion

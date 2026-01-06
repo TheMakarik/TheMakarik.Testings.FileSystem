@@ -164,10 +164,10 @@ public static class FileSystemBuilderExtensions
                 return;
             }
 
+            Directory.CreateDirectory(fullPath);
             var directoryContentBuilder = FileSystem.BeginBuilding();
             directoryContentBuilder.AddRoot(fullPath);
             directoryContentLazyCreational.Invoke(fullPath, directoryContentBuilder);
-            builder.Content.AddRange(directoryContentBuilder.Content);
             directoryContentBuilder.Build();
         });
     }
