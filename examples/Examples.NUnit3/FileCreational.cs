@@ -2,7 +2,7 @@ using TheMakarik.Testing.FileSystem;
 
 namespace Examples.NUnit3;
 
-public class Tests
+public class FileCreational
 {
     private IFileSystem _fileSystem;    
     

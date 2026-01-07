@@ -65,6 +65,31 @@ public static class FileSystemBuilderExtensions
         rootName = Path.GetRandomFileName();
         return builder.AddRoot(rootName);
     }
+    
+    /// <summary>
+    /// Sets the root directory with a randomly generated name in temp.
+    /// </summary>
+    /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
+    /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// The directory name is generated using <see cref="Path.GetRandomFileName"/>.
+    /// Use this method to create unique test environments.
+    /// </remarks>
+    public static IFileSystemBuilder AddRandomInTempRootName(this IFileSystemBuilder builder)
+    {
+        return builder.AddInTempRoot(Path.GetRandomFileName());
+    }
+
+    /// <summary>
+    /// Sets the root directory with a randomly generated name and returns the generated name in temp folder.
+    /// </summary>
+    /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
+    /// <param name="fullPath">The generated random full path of the root directory.</param>
+    /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IFileSystemBuilder AddRandomInTempRootName(this IFileSystemBuilder builder, out string fullPath)
+    {
+        return builder.AddInTempRoot(Path.GetRandomFileName(), out  fullPath);
+    }
 
     /// <summary>
     /// Adds an empty file at the specified relative path from the root.
@@ -87,13 +112,13 @@ public static class FileSystemBuilderExtensions
     /// </summary>
     /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
-    /// <param name="rootPath">The full path to the created file.</param>
+    /// <param name="fullPath">The full path to the created file.</param>
     /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
     public static IFileSystemBuilder AddFile(this IFileSystemBuilder builder,
         string rootRelativePath,
-        out string rootPath)
+        out string fullPath)
     {
-        rootPath = Path.Combine(builder.RootDirectory, rootRelativePath);
+        fullPath = Path.Combine(builder.RootDirectory, rootRelativePath);
         return builder
             .Add(rootRelativePath, (fullPath, _) => File.Create(fullPath).Dispose());
     }
@@ -127,14 +152,14 @@ public static class FileSystemBuilderExtensions
     /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="content">The file content as a string.</param>
-    /// <param name="rootPath">The full path to the created file.</param>
+    /// <param name="fullPath">The full path to the created file.</param>
     /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
     public static IFileSystemBuilder AddFile(this IFileSystemBuilder builder,
         string rootRelativePath,
         string content,
-        out string rootPath)
+        out string fullPath)
     {
-        rootPath = Path.Combine(builder.RootDirectory, rootRelativePath);
+        fullPath = Path.Combine(builder.RootDirectory, rootRelativePath);
         return builder.AddFile(rootRelativePath, content);
     }
 

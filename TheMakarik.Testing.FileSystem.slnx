@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/examples/">
     <Project Path="examples/Examples.NUnit3/Examples.NUnit3.csproj" />
+    <Project Path="examples/Examples.xUnit/Examples.xUnit.csproj" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/TheMakarik.Testing.FileSystem/TheMakarik.Testing.FileSystem.csproj" />
