@@ -208,8 +208,8 @@ public static class FileSystemBuilderExtensions
     /// </param>
     /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
     public static IFileSystemBuilder AddDirectory(this IFileSystemBuilder builder,
-        out string rootPath,
         string rootRelativePath,
+        out string rootPath,
         Func<string, IFileSystemBuilder, IFileSystemBuilder>? directoryContentLazyCreational = null)
     {
         rootPath = Path.Combine(builder.RootDirectory, rootRelativePath);

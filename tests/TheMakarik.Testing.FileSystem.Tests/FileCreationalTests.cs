@@ -3,7 +3,7 @@ using FluentAssertions;
 
 namespace TheMakarik.Testing.FileSystem.Tests;
 
-public class FileCreationalTests : IDisposable
+public class FileCreationalTests
 {
     [Fact]
     public void AddFile_AfterBuilding_CreatedFileMustExists()
@@ -21,7 +21,7 @@ public class FileCreationalTests : IDisposable
     
     [Theory]
     [AutoData]
-    public void AddFileWithContent_AfterBuilding_CreatedFileMustHasContent(string content)
+    public void AddFileWithContent_AfterBuilding_CreatedFileMustHaveContent(string content)
     {
         //Arrange
         using var systemUnderTests = FileSystem.BeginBuilding()
@@ -32,10 +32,5 @@ public class FileCreationalTests : IDisposable
         var result = File.ReadAllText(filePath);
         //Assert
         result.Should().Be(content);
-    }
-    
-    public void Dispose()
-    {
-        // TODO release managed resources here
     }
 }
