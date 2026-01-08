@@ -35,10 +35,15 @@ public sealed class FileSystem : IFileSystem
    
     #region IFileSystem implementation
     public string RootPath { get; private set; }
-    
+
+    public IFileSystem In(string relativePath)
+    {
+        return new FileSystem(Path.Combine(this.RootPath, relativePath));
+    }
+
     public IFileSystemAssertion Should()
     {
-        throw new NotImplementedException();
+        return new FileSystemAssertion(this);
     }
     
     #endregion

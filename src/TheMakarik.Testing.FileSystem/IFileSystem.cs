@@ -13,6 +13,13 @@ public interface IFileSystem : IDisposable, IEnumerable<string>
     /// Root file system folder's path where all <see cref="IFileSystem"/> content contains
     /// </summary>
     public string RootPath { get; }
+
+    /// <summary>
+    /// Gets the <see cref="IFileSystem"/> of deeper directory by relative path
+    /// </summary>
+    /// <param name="relativePath">Root-relatove directory path</param>
+    /// <returns><see cref="IFileSystem"/> of <see cref="relativePath"/></returns>
+    public IFileSystem In(string relativePath);
     
     /// <summary>
     /// Start <see cref="IFileSystem"/> assertion for integrational tests

@@ -4,6 +4,7 @@
     <Project Path="examples/Examples.xUnit/Examples.xUnit.csproj" />
   </Folder>
   <Folder Name="/src/">
+    <Project Path="src/TheMakarik.Testing.FileSystem.ChangeTracker/TheMakarik.Testing.FileSystem.ChangeTracker.csproj" />
     <Project Path="src/TheMakarik.Testing.FileSystem/TheMakarik.Testing.FileSystem.csproj" />
   </Folder>
   <Folder Name="/tests/">

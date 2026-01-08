@@ -21,7 +21,7 @@ public class FileCreationalTests
     
     [Theory]
     [AutoData]
-    public void AddFileWithContent_AfterBuilding_CreatedFileMustHaveContent(string content)
+    public void AddFile_WithContentAfterBuilding_CreatedFileMustHaveContent(string content)
     {
         //Arrange
         using var systemUnderTests = FileSystem.BeginBuilding()

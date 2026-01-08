@@ -24,10 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="AssertionTests\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\src\TheMakarik.Testing.FileSystem\TheMakarik.Testing.FileSystem.csproj" />
     </ItemGroup>
 
