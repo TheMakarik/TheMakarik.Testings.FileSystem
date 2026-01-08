@@ -37,11 +37,11 @@ public static class FileSystemAssertionExtensions
     public static IFileSystemAssertion Contains(this IFileSystemAssertion assertion, string rootRelativePath)
     {
         return assertion.Validate(
-            rootRelativePath, 
-            $"{rootRelativePath} does not exist in the file system", 
+            rootRelativePath,
+            $"{rootRelativePath} does not exist in the file system",
             (relativePath, system) => system.Contains(relativePath));
     }
-    
+
     /// <summary>
     /// Asserts that a file or directory does NOT exist at the specified relative path.
     /// </summary>
@@ -51,11 +51,11 @@ public static class FileSystemAssertionExtensions
     public static IFileSystemAssertion NotContains(this IFileSystemAssertion assertion, string rootRelativePath)
     {
         return assertion.Validate(
-            rootRelativePath, 
-            $"{rootRelativePath} exists in the file system", 
+            rootRelativePath,
+            $"{rootRelativePath} exists in the file system",
             (relativePath, system) => !system.Contains(relativePath));
     }
-    
+
     /// <summary>
     /// Asserts that a file exists and contains at least one line of content.
     /// </summary>
@@ -69,8 +69,8 @@ public static class FileSystemAssertionExtensions
     public static IFileSystemAssertion BeNotEmptyFile(this IFileSystemAssertion assertion, string rootRelativePath)
     {
         return assertion.Validate(
-            rootRelativePath, 
-            $"{rootRelativePath} does not exist or is empty", 
+            rootRelativePath,
+            $"{rootRelativePath} does not exist or is empty",
             (relativePath, system) => File.ReadLines(Path.Combine(system.Root, relativePath)).Any());
     }
 
@@ -86,7 +86,7 @@ public static class FileSystemAssertionExtensions
     /// or culture-aware comparisons, use <see cref="FileContentEquals(string, string, StringComparison)"/>.
     /// </remarks>
     public static IFileSystemAssertion FileContentEquals(
-        this IFileSystemAssertion assertion, 
+        this IFileSystemAssertion assertion,
         string rootRelativePath,
         string content)
     {
@@ -109,10 +109,11 @@ public static class FileSystemAssertionExtensions
     /// built-in assertion methods. The predicate receives the full path to
     /// the file or directory.
     /// </remarks>
-    public static IFileSystemAssertion ItemBe(this IFileSystemAssertion assertion, string rootRelativePath, Predicate<string> predicate)
+    public static IFileSystemAssertion ItemBe(this IFileSystemAssertion assertion, string rootRelativePath,
+        Predicate<string> predicate)
     {
-        return assertion.Validate(rootRelativePath, 
-            "Custom predicate fails", 
+        return assertion.Validate(rootRelativePath,
+            "Custom predicate fails",
             (path, system) => predicate(Path.Combine(system.Root, rootRelativePath)));
     }
 
@@ -132,7 +133,7 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             path,
             $"Directory '{path}' is not empty",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return !Directory.EnumerateFileSystemEntries(fullPath).Any();
@@ -181,7 +182,7 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' is not empty",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return new FileInfo(fullPath).Length == 0;
@@ -196,12 +197,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="expectedSize">The expected file size in bytes.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileHasSize(this IFileSystemAssertion assertion, string rootRelativePath, long expectedSize)
+    public static IFileSystemAssertion FileHasSize(this IFileSystemAssertion assertion, string rootRelativePath,
+        long expectedSize)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not have size {expectedSize} bytes",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return new FileInfo(fullPath).Length == expectedSize;
@@ -217,12 +219,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="text">The text that should be present in the file.</param>
     /// <param name="stringComparison">The string comparison rules to use. Default is <see cref="StringComparison.Ordinal"/>.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileContains(this IFileSystemAssertion assertion, string rootRelativePath, string text, StringComparison stringComparison = StringComparison.Ordinal)
+    public static IFileSystemAssertion FileContains(this IFileSystemAssertion assertion, string rootRelativePath,
+        string text, StringComparison stringComparison = StringComparison.Ordinal)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not contain text: {text}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
@@ -238,12 +241,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="pattern">The regular expression pattern to match.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileMatchesRegex(this IFileSystemAssertion assertion, string rootRelativePath, string pattern)
+    public static IFileSystemAssertion FileMatchesRegex(this IFileSystemAssertion assertion, string rootRelativePath,
+        string pattern)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not match regex pattern: {pattern}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
@@ -259,12 +263,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
     /// <param name="expectedCount">The expected number of files in the directory.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion DirectoryHasFileCount(this IFileSystemAssertion assertion, string rootRelativePath, int expectedCount)
+    public static IFileSystemAssertion DirectoryHasFileCount(this IFileSystemAssertion assertion,
+        string rootRelativePath, int expectedCount)
     {
         return assertion.Validate(
             rootRelativePath,
             $"Directory '{rootRelativePath}' does not contain exactly {expectedCount} files",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return Directory.GetFiles(fullPath).Length == expectedCount;
@@ -279,12 +284,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="dateTime">The date and time to compare against.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileModifiedAfter(this IFileSystemAssertion assertion, string rootRelativePath, DateTime dateTime)
+    public static IFileSystemAssertion FileModifiedAfter(this IFileSystemAssertion assertion, string rootRelativePath,
+        DateTime dateTime)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' was not modified after {dateTime}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return File.GetLastWriteTime(fullPath) > dateTime;
@@ -299,12 +305,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="dateTime">The date and time to compare against.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileCreatedBefore(this IFileSystemAssertion assertion, string rootRelativePath, DateTime dateTime)
+    public static IFileSystemAssertion FileCreatedBefore(this IFileSystemAssertion assertion, string rootRelativePath,
+        DateTime dateTime)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' was not created before {dateTime}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return File.GetCreationTime(fullPath) < dateTime;
@@ -319,12 +326,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="attributes">The file attributes to check for.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileHasAttributes(this IFileSystemAssertion assertion, string rootRelativePath, FileAttributes attributes)
+    public static IFileSystemAssertion FileHasAttributes(this IFileSystemAssertion assertion, string rootRelativePath,
+        FileAttributes attributes)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not have attributes: {attributes}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return (File.GetAttributes(fullPath) & attributes) == attributes;
@@ -339,12 +347,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
     /// <param name="attributes">The file attributes that should NOT be present.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileDoesNotHaveAttributes(this IFileSystemAssertion assertion, string rootRelativePath, FileAttributes attributes)
+    public static IFileSystemAssertion FileDoesNotHaveAttributes(this IFileSystemAssertion assertion,
+        string rootRelativePath, FileAttributes attributes)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' has unexpected attributes: {attributes}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return (File.GetAttributes(fullPath) & attributes) == 0;
@@ -359,19 +368,20 @@ public static class FileSystemAssertionExtensions
     /// <param name="firstFilePath">The relative path to the first file from the root directory.</param>
     /// <param name="secondFilePath">The relative path to the second file from the root directory.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FilesAreEqual(this IFileSystemAssertion assertion, string firstFilePath, string secondFilePath)
+    public static IFileSystemAssertion FilesAreEqual(this IFileSystemAssertion assertion, string firstFilePath,
+        string secondFilePath)
     {
         return assertion.Validate(
             firstFilePath,
             $"Files '{firstFilePath}' and '{secondFilePath}' are not equal",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var firstFullPath = Path.Combine(system.Root, firstFilePath);
                 var secondFullPath = Path.Combine(system.Root, secondFilePath);
-                
+
                 var firstBytes = File.ReadAllBytes(firstFullPath);
                 var secondBytes = File.ReadAllBytes(secondFullPath);
-                
+
                 return firstBytes.SequenceEqual(secondBytes);
             }
         );
@@ -385,12 +395,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="endingText">The text that should appear at the end of the file.</param>
     /// <param name="stringComparison">The string comparison rules to use. Default is <see cref="StringComparison.Ordinal"/>.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileEndsWith(this IFileSystemAssertion assertion, string rootRelativePath, string endingText, StringComparison stringComparison = StringComparison.Ordinal)
+    public static IFileSystemAssertion FileEndsWith(this IFileSystemAssertion assertion, string rootRelativePath,
+        string endingText, StringComparison stringComparison = StringComparison.Ordinal)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not end with: {endingText}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
@@ -407,12 +418,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="startingText">The text that should appear at the beginning of the file.</param>
     /// <param name="stringComparison">The string comparison rules to use. Default is <see cref="StringComparison.Ordinal"/>.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion FileStartsWith(this IFileSystemAssertion assertion, string rootRelativePath, string startingText, StringComparison stringComparison = StringComparison.Ordinal)
+    public static IFileSystemAssertion FileStartsWith(this IFileSystemAssertion assertion, string rootRelativePath,
+        string startingText, StringComparison stringComparison = StringComparison.Ordinal)
     {
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not start with: {startingText}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
@@ -428,12 +440,13 @@ public static class FileSystemAssertionExtensions
     /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
     /// <param name="extension">The file extension to search for (including the dot, e.g., ".txt").</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
-    public static IFileSystemAssertion DirectoryContainsFileWithExtension(this IFileSystemAssertion assertion, string rootRelativePath, string extension)
+    public static IFileSystemAssertion DirectoryContainsFileWithExtension(this IFileSystemAssertion assertion,
+        string rootRelativePath, string extension)
     {
         return assertion.Validate(
             rootRelativePath,
             $"Directory '{rootRelativePath}' does not contain any files with extension '{extension}'",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 return Directory.GetFiles(fullPath, $"*{extension}").Any();
@@ -450,7 +463,7 @@ public static class FileSystemAssertionExtensions
     /// <param name="comparisonType">The string comparison rules to use.</param>
     /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
     public static IFileSystemAssertion FileContentEquals(
-        this IFileSystemAssertion assertion, 
+        this IFileSystemAssertion assertion,
         string rootRelativePath,
         string content,
         StringComparison comparisonType)
@@ -458,11 +471,255 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             rootRelativePath,
             $"{rootRelativePath} content does not match expected content: {content}",
-            (relativePath, system) => 
+            (relativePath, system) =>
             {
                 var fullPath = Path.Combine(system.Root, relativePath);
                 var fileContent = File.ReadAllText(fullPath);
                 return string.Equals(fileContent, content, comparisonType);
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains a specific file by name.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="fileName">The name of the file to search for (without path).</param>
+    /// <param name="searchOption">Specifies whether to search in subdirectories. Default is <see cref="SearchOption.TopDirectoryOnly"/>.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method searches for a file by name within the specified directory.
+    /// Use this when you need to verify that a specific file exists in a directory,
+    /// regardless of its exact relative path from the current directory.
+    /// </remarks>
+    public static IFileSystemAssertion DirectoryContainsFile(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        string fileName,
+        SearchOption searchOption = SearchOption.TopDirectoryOnly)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Directory '{rootRelativePath}' does not contain file '{fileName}'",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                return Directory.GetFiles(fullPath, fileName, searchOption).Any();
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains a specific subdirectory by name.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="directoryName">The name of the subdirectory to search for (without path).</param>
+    /// <param name="searchOption">Specifies whether to search in nested subdirectories. Default is <see cref="SearchOption.TopDirectoryOnly"/>.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method searches for a subdirectory by name within the specified directory.
+    /// Use this when you need to verify that a specific subdirectory exists in a directory,
+    /// regardless of its exact relative path from the current directory.
+    /// </remarks>
+    public static IFileSystemAssertion DirectoryContainsSubdirectory(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        string directoryName,
+        SearchOption searchOption = SearchOption.TopDirectoryOnly)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Directory '{rootRelativePath}' does not contain subdirectory '{directoryName}'",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                return Directory.GetDirectories(fullPath, directoryName, searchOption).Any();
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains all files from the specified list.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="fileNames">Array of file names to search for (without path).</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method verifies that a directory contains all the specified files.
+    /// It only checks for existence and does not verify file contents.
+    /// If any of the specified files are missing, the assertion fails.
+    /// </remarks>
+    public static IFileSystemAssertion DirectoryContainsAllFiles(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        params string[] fileNames)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Directory '{rootRelativePath}' does not contain all specified files: {string.Join(", ", fileNames)}",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var existingFiles = Directory.GetFiles(fullPath).Select(Path.GetFileName);
+                return fileNames.All(fileName => existingFiles.Contains(fileName));
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains exactly the specified files (no extra files).
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="fileNames">Array of expected file names (without path).</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method verifies that a directory contains exactly the specified files and no others.
+    /// The order of files is not considered. Subdirectories are ignored in this comparison.
+    /// Use this method when you need to ensure a directory has a precise set of files.
+    /// </remarks>
+    public static IFileSystemAssertion DirectoryContainsExactlyFiles(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        params string[] fileNames)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Directory '{rootRelativePath}' does not contain exactly the specified files: {string.Join(", ", fileNames)}",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var existingFiles = Directory.GetFiles(fullPath).Select(Path.GetFileName).ToList();
+                var expectedFiles = fileNames.ToList();
+
+                return existingFiles.Count == expectedFiles.Count &&
+                       existingFiles.All(file => expectedFiles.Contains(file));
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that all files in a directory satisfy a specific predicate.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="predicate">The predicate to evaluate on each file name in the directory.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method applies the specified predicate to all files in the directory.
+    /// The predicate receives only the file name (without path) for each file.
+    /// The assertion fails if any file does not satisfy the predicate.
+    /// </remarks>
+    public static IFileSystemAssertion AllFilesInDirectorySatisfy(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        Predicate<string> predicate)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Not all files in directory '{rootRelativePath}' satisfy the predicate",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var files = Directory.GetFiles(fullPath).Select(Path.GetFileName);
+                return files.All(fileName => predicate(fileName));
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains at least one file that satisfies a specific predicate.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="predicate">The predicate to evaluate on each file name in the directory.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method checks if any file in the directory satisfies the specified predicate.
+    /// The predicate receives only the file name (without path) for each file.
+    /// The assertion fails if no file satisfies the predicate.
+    /// </remarks>
+    public static IFileSystemAssertion DirectoryContainsFileSatisfying(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        Predicate<string> predicate)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Directory '{rootRelativePath}' does not contain any file satisfying the predicate",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var files = Directory.GetFiles(fullPath).Select(Path.GetFileName);
+                return files.Any(fileName => predicate(fileName));
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains a specific number of subdirectories.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="expectedCount">The expected number of subdirectories in the directory.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method counts only direct subdirectories (not nested ones).
+    /// Use this when you need to verify the exact number of child directories.
+    /// </remarks>
+    public static IFileSystemAssertion DirectoryHasSubdirectoryCount(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        int expectedCount)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Directory '{rootRelativePath}' does not contain exactly {expectedCount} subdirectories",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                return Directory.GetDirectories(fullPath).Length == expectedCount;
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that a directory contains files with specific extensions.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the directory from the root directory.</param>
+    /// <param name="extensions">Array of file extensions to check for (with or without leading dot).</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method verifies that all files in the directory have one of the specified extensions.
+    /// Extensions can be provided with or without a leading dot (e.g., ".txt" or "txt").
+    /// The assertion fails if any file has a different extension.
+    /// </remarks>
+    public static IFileSystemAssertion AllFilesHaveExtensions(
+        this IFileSystemAssertion assertion,
+        string rootRelativePath,
+        params string[] extensions)
+    {
+        return assertion.Validate(
+            rootRelativePath,
+            $"Not all files in directory '{rootRelativePath}' have the specified extensions: {string.Join(", ", extensions)}",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var files = Directory.GetFiles(fullPath);
+
+                // Normalize extensions: ensure they start with a dot
+                var normalizedExtensions = extensions.Select(ext =>
+                    ext.StartsWith(".") ? ext : $".{ext}").ToHashSet();
+
+                return files.All(file =>
+                {
+                    var fileExtension = Path.GetExtension(file);
+                    return normalizedExtensions.Contains(fileExtension);
+                });
             }
         );
     }
