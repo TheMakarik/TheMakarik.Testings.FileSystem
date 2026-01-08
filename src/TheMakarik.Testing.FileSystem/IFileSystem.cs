@@ -12,7 +12,7 @@ public interface IFileSystem : IDisposable, IEnumerable<string>
     /// <summary>
     /// Root file system folder's path where all <see cref="IFileSystem"/> content contains
     /// </summary>
-    public string RootPath { get; }
+    public string Root { get; }
 
     /// <summary>
     /// Gets the <see cref="IFileSystem"/> of deeper directory by relative path

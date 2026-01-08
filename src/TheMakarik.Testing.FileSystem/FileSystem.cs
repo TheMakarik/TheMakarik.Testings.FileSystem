@@ -28,17 +28,17 @@ public sealed class FileSystem : IFileSystem
 
     internal FileSystem(string root)
     {
-        this.RootPath = root;
+        this.Root = root;
     }
     
     #endregion
    
     #region IFileSystem implementation
-    public string RootPath { get; private set; }
+    public string Root { get; private set; }
 
     public IFileSystem In(string relativePath)
     {
-        return new FileSystem(Path.Combine(this.RootPath, relativePath));
+        return new FileSystem(Path.Combine(this.Root, relativePath));
     }
 
     public IFileSystemAssertion Should()
@@ -68,7 +68,7 @@ public sealed class FileSystem : IFileSystem
 
     public void Dispose()
     {
-        Directory.Delete(this.RootPath, recursive: true);
+        Directory.Delete(this.Root, recursive: true);
     }
 
     #endregion
@@ -78,8 +78,8 @@ public sealed class FileSystem : IFileSystem
     private IEnumerable<string> EnumerateRootContent()
     {
         return Directory
-            .EnumerateDirectories(this.RootPath)
-            .Concat(Directory.EnumerateFiles(this.RootPath)
+            .EnumerateDirectories(this.Root)
+            .Concat(Directory.EnumerateFiles(this.Root)
             ).ToArray();
     }
     

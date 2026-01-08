@@ -71,7 +71,7 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             rootRelativePath, 
             $"{rootRelativePath} does not exist or is empty", 
-            (relativePath, system) => File.ReadLines(Path.Combine(system.RootPath, relativePath)).Any());
+            (relativePath, system) => File.ReadLines(Path.Combine(system.Root, relativePath)).Any());
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             rootRelativePath,
             $"{rootRelativePath} content does not match expected content: {content}",
-            (relativePath, system) => File.ReadAllText(Path.Combine(system.RootPath, relativePath)) == content
+            (relativePath, system) => File.ReadAllText(Path.Combine(system.Root, relativePath)) == content
         );
     }
 
@@ -113,7 +113,7 @@ public static class FileSystemAssertionExtensions
     {
         return assertion.Validate(rootRelativePath, 
             "Custom predicate fails", 
-            (path, system) => predicate(Path.Combine(system.RootPath, rootRelativePath)));
+            (path, system) => predicate(Path.Combine(system.Root, rootRelativePath)));
     }
 
     /// <summary>
@@ -134,7 +134,7 @@ public static class FileSystemAssertionExtensions
             $"Directory '{path}' is not empty",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return !Directory.EnumerateFileSystemEntries(fullPath).Any();
             }
         );
@@ -151,7 +151,7 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             rootRelativePath,
             $"File '{rootRelativePath}' does not exist",
-            (relativePath, system) => File.Exists(Path.Combine(system.RootPath, relativePath))
+            (relativePath, system) => File.Exists(Path.Combine(system.Root, relativePath))
         );
     }
 
@@ -166,7 +166,7 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(
             rootRelativePath,
             $"Directory '{rootRelativePath}' does not exist",
-            (relativePath, system) => Directory.Exists(Path.Combine(system.RootPath, relativePath))
+            (relativePath, system) => Directory.Exists(Path.Combine(system.Root, relativePath))
         );
     }
 
@@ -183,7 +183,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' is not empty",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return new FileInfo(fullPath).Length == 0;
             }
         );
@@ -203,7 +203,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' does not have size {expectedSize} bytes",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return new FileInfo(fullPath).Length == expectedSize;
             }
         );
@@ -224,7 +224,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' does not contain text: {text}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
                 return content.IndexOf(text, stringComparison) >= 0;
             }
@@ -245,7 +245,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' does not match regex pattern: {pattern}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
                 return Regex.IsMatch(content, pattern);
             }
@@ -266,7 +266,7 @@ public static class FileSystemAssertionExtensions
             $"Directory '{rootRelativePath}' does not contain exactly {expectedCount} files",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return Directory.GetFiles(fullPath).Length == expectedCount;
             }
         );
@@ -286,7 +286,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' was not modified after {dateTime}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return File.GetLastWriteTime(fullPath) > dateTime;
             }
         );
@@ -306,7 +306,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' was not created before {dateTime}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return File.GetCreationTime(fullPath) < dateTime;
             }
         );
@@ -326,7 +326,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' does not have attributes: {attributes}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return (File.GetAttributes(fullPath) & attributes) == attributes;
             }
         );
@@ -346,7 +346,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' has unexpected attributes: {attributes}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return (File.GetAttributes(fullPath) & attributes) == 0;
             }
         );
@@ -366,8 +366,8 @@ public static class FileSystemAssertionExtensions
             $"Files '{firstFilePath}' and '{secondFilePath}' are not equal",
             (relativePath, system) => 
             {
-                var firstFullPath = Path.Combine(system.RootPath, firstFilePath);
-                var secondFullPath = Path.Combine(system.RootPath, secondFilePath);
+                var firstFullPath = Path.Combine(system.Root, firstFilePath);
+                var secondFullPath = Path.Combine(system.Root, secondFilePath);
                 
                 var firstBytes = File.ReadAllBytes(firstFullPath);
                 var secondBytes = File.ReadAllBytes(secondFullPath);
@@ -392,7 +392,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' does not end with: {endingText}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
                 return content.EndsWith(endingText, stringComparison);
             }
@@ -414,7 +414,7 @@ public static class FileSystemAssertionExtensions
             $"File '{rootRelativePath}' does not start with: {startingText}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 var content = File.ReadAllText(fullPath);
                 return content.StartsWith(startingText, stringComparison);
             }
@@ -435,7 +435,7 @@ public static class FileSystemAssertionExtensions
             $"Directory '{rootRelativePath}' does not contain any files with extension '{extension}'",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 return Directory.GetFiles(fullPath, $"*{extension}").Any();
             }
         );
@@ -460,7 +460,7 @@ public static class FileSystemAssertionExtensions
             $"{rootRelativePath} content does not match expected content: {content}",
             (relativePath, system) => 
             {
-                var fullPath = Path.Combine(system.RootPath, relativePath);
+                var fullPath = Path.Combine(system.Root, relativePath);
                 var fileContent = File.ReadAllText(fullPath);
                 return string.Equals(fileContent, content, comparisonType);
             }

@@ -8,12 +8,12 @@
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net8.0::TheMakarik.Testing.FileSystem.Tests.DirectoryCreationalTests.AddDirectory_AfterBuilding_CreatedDirectoryMustExists&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2604cd8c_002D45c9_002D4e20_002Da4b9_002Db237272b0546/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ContnetFile_MustHaveContent #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2604cd8c_002D45c9_002D4e20_002Da4b9_002Db237272b0546/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ContnetFile_MustHaveContent #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net8.0::TheMakarik.Testing.FileSystem.Tests.FileCreationalTests.ContnetFile_MustHaveContent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::933E6079-A48B-46EC-1B41-59A84CEB47E5::net8.0::Examples.NUnit3.AssertionExamples&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f70ea72f_002D0b24_002D43db_002Da104_002D7bca77cbba0e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddDirectory_AfterBuildingWithSubDirectory_CreatedSubDirectoryMustExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f70ea72f_002D0b24_002D43db_002Da104_002D7bca77cbba0e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AddDirectory_AfterBuildingWithSubDirectory_CreatedSubDirectoryMustExists" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net8.0::TheMakarik.Testing.FileSystem.Tests.DirectoryCreationalTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::933E6079-A48B-46EC-1B41-59A84CEB47E5::net8.0::Examples.NUnit3.ValidationExamples.File1_MustHaveContent&lt;/TestId&gt;&#xD;
