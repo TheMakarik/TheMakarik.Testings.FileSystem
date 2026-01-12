@@ -53,7 +53,7 @@ using ReadMeExample;
 
 namespace ReadMeExample.Tests;
 
-public class ReadMeExampleTestts
+public class ReadMeExampleTests
 {
     private readonly string _mockFileFullPath;
     private readonly IFileSystem _fileSystem;
