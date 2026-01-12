@@ -1,6 +1,6 @@
 <div align="center">
   <h1>
-    <img src="img/icon.svg" alt="TheMakarik Icon" width="48" height="48" style="vertical-align: middle;">
+    <img src="img/icon.png" alt="TheMakarik Icon" width="48" height="48" style="vertical-align: middle;">
     <span style="margin-left: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
       TheMakarik.Testing.FileSystem
     </span>
