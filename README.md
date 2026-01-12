@@ -49,11 +49,15 @@ public sealed class Explorer : IExplorer
 ```csharp
 using TheMakarik.Testing.FileSystem;
 using TheMakarik.Testing.FileSystem.Zip;
+using ReadMeExample;
+
+namespace ReadMeExample.Tests;
 
 public class ReadMeExample
 {
     private readonly string _mockFileFullPath;
     private readonly IFileSystem _fileSystem;
+    private string _emptyDirectory;
 
     public ReadMeExample()
     {
@@ -66,14 +70,14 @@ public class ReadMeExample
                     .AddFile(Path.GetRandomFileName())
                     .AddFile("subdir-file.txt", "I am file from sub directory")
                     .AddFiles(["first-file", "second-file", "third-file"]))
-            .AddDirectory("not-empty-directory")
+            .AddDirectory("not-empty-directory", out _emptyDirectory)
             .AddZip("my-archive.zip", 
                 builder =>  builder
                     .AddFile("README.md", "# Hello, I am my-archive.zip readme file")
                     .AddFile(Path.GetRandomFileName(), "my-archive file content"))
             .Build();
     }
-    
+
     [Fact]
     public void GetContent_FromRoot_ReturnsRootContent()
     {
@@ -100,6 +104,7 @@ public class ReadMeExample
             .HasNoDirectoryContent()
             .ContentEquals(systemUnderTests.GetContent(_fileSystem.Root));
     }
+
 }
 ```
 
