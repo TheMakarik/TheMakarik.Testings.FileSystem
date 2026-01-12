@@ -63,9 +63,10 @@
     &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ReadMeExample.GetContent_FromRoot_ReturnsRootContent&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b8675fd_002Deaef_002D4ee7_002Da90a_002D3ca2af26f4eb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetContent_FromRoot_ReturnsRootContent #6" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b8675fd_002Deaef_002D4ee7_002Da90a_002D3ca2af26f4eb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetContent_FromRoot_ReturnsRootContent #6" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ReadMeExample.GetContent_FromRoot_ReturnsRootContent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::933E6079-A48B-46EC-1B41-59A84CEB47E5::net8.0::Examples.NUnit3.ZipFIleAssertions.ZipContentEqualsTo&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=948ef7e7_002D8aba_002D4dda_002Db210_002D96ef4baa4652/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ReadMeExample #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
@@ -79,9 +80,11 @@
     &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ReadMeExample.GetContent_ReturnsContentOfTheDirectory&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=969da803_002D2266_002D45c5_002D9aa8_002D967b54bed039/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetContent_FromRoot_ReturnsRootContent #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=969da803_002D2266_002D45c5_002D9aa8_002D967b54bed039/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetContent_FromRoot_ReturnsRootContent #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ReadMeExample.GetContent_FromRoot_ReturnsRootContent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::933E6079-A48B-46EC-1B41-59A84CEB47E5::net8.0::Examples.NUnit3.ZipFIleAssertions.ZipContentEqualsTo&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ZipFileAssertions&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a66ef222_002Ddae0_002D4537_002D927c_002De79024096dce/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddFile_AfterBuilding_CreatedFileMustExists #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;

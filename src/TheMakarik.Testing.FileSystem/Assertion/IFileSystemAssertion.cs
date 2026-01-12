@@ -48,4 +48,9 @@ public interface IFileSystemAssertion
         string rootRelativePath, 
         string exceptionMessage, 
         Func<string, IFileSystem, bool> predicate);
+    
+    /// <summary>
+    /// Reverse the file system assertion that means that assertions will be fallen on true predicates
+    /// </summary>
+    public IFileSystemAssertion No { get; }
 }

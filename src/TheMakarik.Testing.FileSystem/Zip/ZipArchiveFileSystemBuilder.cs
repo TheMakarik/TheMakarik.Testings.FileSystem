@@ -7,7 +7,7 @@ using TheMakarik.Testing.FileSystem.Objects;
 
 namespace TheMakarik.Testing.FileSystem.Zip;
 
-public sealed class ZipArchiveFileSystemBuilder(string root) : IZipArchiveFileSystemBuilder
+public sealed class ZipArchiveFileSystemBuilder(string root, string? prefix = null) : IZipArchiveFileSystemBuilder
 {
     #region Fields
     
@@ -17,37 +17,32 @@ public sealed class ZipArchiveFileSystemBuilder(string root) : IZipArchiveFileSy
     #region IZipArchiveFileSystemBuilder implementation
 
     public string Root { get; } = root;
-    
+    public string Prefix { get; } = prefix ?? string.Empty;
+
     public IZipArchiveFileSystemBuilder Add(string relativePath, Action<ZipArchive, string> additionalAction)
     {
        _builderActions.Add(additionalAction);   
        return this;
     }
 
-    public IZipArchiveFileSystem Build()
+    public void Build()
     {
         Guard.AgainstNull(Root, nameof(root));
         
         Debug.Assert(Path.GetExtension(Root) == ".zip");
         using var zipStream = File.Create(Root);
-        
-        //BE SURE THAT YOU DISPOSE THE CONNECTION UNTIL YOU  CREATE THE FileSystem, ZipArchiveFileSystem will create a new instance of ZipArchive
-        using (var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create))
+        using var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Create);
+        try
         {
-            try
-            {
-                foreach (var action in _builderActions)
-                    action(zipArchive, Root);
-            }
-            catch (Exception e)
-            {
-                if(File.Exists(Root))
-                    File.Delete(Root);
-                throw;
-            }
+            foreach (var action in _builderActions)
+                action(zipArchive, Root);
         }
-
-        return new ZipArchiveFileSystem(Root);
+        catch (Exception e)
+        {
+            if(File.Exists(Root))
+                File.Delete(Root);
+            throw;
+        }
     }
     
     #endregion

@@ -91,4 +91,7 @@ public sealed class FileSystemAssertion(IFileSystem fileSystem) : IFileSystemAss
         
         throw new FileSystemAssertionException(exceptionMessage);
     }
+
+    /// <inheritdoc/>
+    public IFileSystemAssertion No => new FileSystemReversedAssertions(fileSystem);
 }

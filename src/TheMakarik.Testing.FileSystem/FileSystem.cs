@@ -22,7 +22,6 @@ public sealed class FileSystem : IFileSystem
     
     #endregion
     
-    
     #region Static IFileSystemBuilder constructor
     
     /// <summary>
@@ -35,10 +34,27 @@ public sealed class FileSystem : IFileSystem
     }
 
     #endregion
+
+    #region Event handlers
+
+    /// <inheritdoc/>
+    public event EventHandler? Disposed;
+    
+    /// <inheritdoc/>
+    public event EventHandler? AssertionStart;
+
+    #endregion
     
     #region Construtors
 
-    internal FileSystem(string root)
+    /// <summary>
+    /// Creates an instance of the <see cref="FileSystem"/> from existing folder
+    /// </summary>
+    /// <param name="root">Exinsting folder path</param>
+    /// <remarks>
+    /// Use <see cref="FileSystem.BeginBuilding"/> if yoy need to create <see cref="IFileSystem"/> from not existing directory
+    /// </remarks>
+    public FileSystem(string root)
     {
         this.Root = root;
     }
@@ -46,7 +62,9 @@ public sealed class FileSystem : IFileSystem
     #endregion
    
     #region IFileSystem implementation
+
     
+
     /// <inheritdoc/>
     public string Root { get; private set; }
 
@@ -59,6 +77,7 @@ public sealed class FileSystem : IFileSystem
     /// <inheritdoc/>
     public IFileSystemAssertion Should()
     {
+        AssertionStart?.Invoke(this, EventArgs.Empty);
         return new FileSystemAssertion(this);
     }
     
@@ -88,6 +107,7 @@ public sealed class FileSystem : IFileSystem
     /// </summary>
     public void Dispose()
     {
+        Disposed?.Invoke(this, EventArgs.Empty);
         Directory.Delete(this.Root, recursive: true);
     }
 

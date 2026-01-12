@@ -59,6 +59,7 @@ public class ReadMeExampleTests
             .ContentEquals(systemUnderTests.GetContent(_fileSystem.Root));
     }
     
+    
     [Fact]
     public void GetContent_ReturnsContentOfTheDirectory()
     {
@@ -73,5 +74,7 @@ public class ReadMeExampleTests
             .HasNoDirectoryContent()
             .ContentEquals(systemUnderTests.GetContent(_fileSystem.Root));
     }
+    
+    
 
 }
