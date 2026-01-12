@@ -22,13 +22,13 @@ public sealed class Explorer : IExplorer
     }
 }
 
-public class ReadMeExample
+public class ReadMeExampleTests
 {
     private readonly string _mockFileFullPath;
     private readonly IFileSystem _fileSystem;
     private string _emptyDirectory;
 
-    public ReadMeExample()
+    public ReadMeExampleTests()
     {
         _fileSystem = FileSystem.BeginBuilding()
             .AddRandomInTempRootName()

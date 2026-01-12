@@ -53,13 +53,13 @@ using ReadMeExample;
 
 namespace ReadMeExample.Tests;
 
-public class ReadMeExample
+public class ReadMeExampleTestts
 {
     private readonly string _mockFileFullPath;
     private readonly IFileSystem _fileSystem;
     private string _emptyDirectory;
 
-    public ReadMeExample()
+    public ReadMeExampleTests()
     {
         _fileSystem = FileSystem.BeginBuilding()
             .AddRandomInTempRootName()
