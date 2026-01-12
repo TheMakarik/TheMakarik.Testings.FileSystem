@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
 using TheMakarik.Testing.FileSystem.Assertion;
 
 namespace TheMakarik.Testing.FileSystem;
@@ -14,13 +16,14 @@ namespace TheMakarik.Testing.FileSystem;
 /// <para>
 /// This class contains fluent assertion methods that operate exclusively on the 
 /// current root directory of the file system. All paths are relative to the 
-/// <see cref="IFileSystem.RootDirectory"/>.
+/// <see cref="IFileSystem.Root"/>.
 /// </para>
 /// <para>
 /// These extensions provide convenient ways to validate common file system 
 /// conditions without requiring custom predicate functions.
 /// </para>
 /// </remarks>
+[PublicAPI]
 public static class FileSystemAssertionExtensions
 {
     /// <summary>
@@ -115,6 +118,26 @@ public static class FileSystemAssertionExtensions
         return assertion.Validate(rootRelativePath,
             "Custom predicate fails",
             (path, system) => predicate(Path.Combine(system.Root, rootRelativePath)));
+    }
+    
+    /// <summary>
+    /// Asserts that a root directory executes predicate
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path from the root directory.</param>
+    /// <param name="predicate">The custom predicate to evaluate on the full path.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method allows for custom validation logic that isn't covered by
+    /// built-in assertion methods. The predicate receives the full path to
+    /// the file or directory.
+    /// </remarks>
+    public static IFileSystemAssertion Be(this IFileSystemAssertion assertion,
+        Predicate<string> predicate)
+    {
+        return assertion.Validate(string.Empty,
+            "Custom predicate fails",
+            (path, system) => predicate(system.Root));
     }
 
     /// <summary>
@@ -720,6 +743,305 @@ public static class FileSystemAssertionExtensions
                     var fileExtension = Path.GetExtension(file);
                     return normalizedExtensions.Contains(fileExtension);
                 });
+            }
+        );
+    }
+    
+        /// <summary>
+    /// Asserts that the root directory contains exactly the specified files and directories.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="expectedItems">The collection of expected file and directory names.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method validates that the root directory contains exactly the specified items
+    /// (both files and directories) and no additional items. The comparison is performed
+    /// using case-sensitive file name matching.
+    /// </remarks>
+    public static IFileSystemAssertion ContentEquals(
+        this IFileSystemAssertion assertion,
+        IEnumerable<string> expectedItems)
+    {
+        return assertion.Validate(
+            string.Empty,
+            $"Root directory content does not match expected items: {string.Join(", ", expectedItems)}",
+            (relativePath, system) =>
+            {
+                var actualItems = Directory.GetFileSystemEntries(system.Root);
+                var expectedList = expectedItems.ToList();
+
+                return actualItems.All(item => expectedList.Contains(item));
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory contains only files (no subdirectories).
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method verifies that the root directory contains no subdirectories.
+    /// It does not check the number or names of files, only ensures there are no directories.
+    /// </remarks>
+    public static IFileSystemAssertion ContentContainsOnlyFiles(
+        this IFileSystemAssertion assertion)
+    {
+        return assertion.Validate(
+            string.Empty,
+            "Root directory contains subdirectories",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                return !Directory.GetDirectories(fullPath).Any();
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory contains only directories (no files).
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method verifies that the root directory contains no files.
+    /// It does not check the number or names of directories, only ensures there are no files.
+    /// </remarks>
+    public static IFileSystemAssertion ContentContainsOnlyDirectories(
+        this IFileSystemAssertion assertion)
+    {
+        return assertion.Validate(
+            string.Empty,
+            "Root directory contains files",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                return !Directory.GetFiles(fullPath).Any();
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory has a total size less than the specified limit.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="maxSizeInBytes">The maximum allowed total size in bytes.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method calculates the total size of all files in the root directory
+    /// (including files in subdirectories) and asserts it's less than the specified limit.
+    /// Directories themselves do not contribute to the size calculation.
+    /// </remarks>
+    public static IFileSystemAssertion TotalSizeLessThan(
+        this IFileSystemAssertion assertion,
+        long maxSizeInBytes)
+    {
+        return assertion.Validate(
+            string.Empty,
+            $"Total size of root directory exceeds {maxSizeInBytes} bytes",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var allFiles = Directory.GetFiles(fullPath, "*", SearchOption.AllDirectories);
+                var totalSize = allFiles.Sum(file => new FileInfo(file).Length);
+                return totalSize < maxSizeInBytes;
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that all files in the root directory have names matching the specified pattern.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="namePattern">The regex pattern to match file names against.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method validates that all files (not directories) in the root directory
+    /// have names that match the specified regular expression pattern.
+    /// The pattern is applied to file names only (without path or extension).
+    /// </remarks>
+    public static IFileSystemAssertion AllFilesMatchNamePattern(
+        this IFileSystemAssertion assertion,
+        string namePattern)
+    {
+        return assertion.Validate(
+            string.Empty,
+            $"Not all files in root directory match name pattern: {namePattern}",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var files = Directory.GetFiles(fullPath, "*", SearchOption.AllDirectories);
+                return files.All(file =>
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    return Regex.IsMatch(fileName, namePattern);
+                });
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory has a specific file count (including files in subdirectories).
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="expectedFileCount">The expected total number of files.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method counts all files in the root directory recursively.
+    /// It includes files in all subdirectories but excludes directory entries themselves.
+    /// </remarks>
+    public static IFileSystemAssertion TotalFileCount(
+        this IFileSystemAssertion assertion,
+        int expectedFileCount)
+    {
+        return assertion.Validate(
+            string.Empty,
+            $"Root directory does not contain exactly {expectedFileCount} files",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var allFiles = Directory.GetFiles(fullPath, "*", SearchOption.AllDirectories);
+                return allFiles.Length == expectedFileCount;
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory has no duplicate file names.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method checks that all files in the root directory have unique names.
+    /// The comparison is case-sensitive. Files in different subdirectories with
+    /// the same name are considered duplicates.
+    /// </remarks>
+    public static IFileSystemAssertion NoDuplicateFileNames(
+        this IFileSystemAssertion assertion)
+    {
+        return assertion.Validate(
+            string.Empty,
+            "Root directory contains files with duplicate names",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var allFiles = Directory.GetFiles(fullPath, "*", SearchOption.AllDirectories);
+                var fileNames = allFiles.Select(Path.GetFileName);
+                return fileNames.Distinct().Count() == fileNames.Count();
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory contains at least one file with content matching the specified text.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="searchText">The text to search for in file contents.</param>
+    /// <param name="stringComparison">The string comparison rules to use. Default is <see cref="StringComparison.Ordinal"/>.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method searches through all files in the root directory (including subdirectories)
+    /// for the specified text. It stops searching after finding the first match.
+    /// Use this for verifying that specific content exists somewhere in the file system.
+    /// </remarks>
+    public static IFileSystemAssertion ContainsFileWithText(
+        this IFileSystemAssertion assertion,
+        string searchText,
+        StringComparison stringComparison = StringComparison.Ordinal)
+    {
+        return assertion.Validate(
+            string.Empty,
+            $"Root directory does not contain any file with text: {searchText}",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var allFiles = Directory.GetFiles(fullPath, "*", SearchOption.AllDirectories);
+                
+                foreach (var file in allFiles)
+                {
+                    try
+                    {
+                        var content = File.ReadAllText(file);
+                        if (content.IndexOf(searchText, stringComparison) >= 0)
+                            return true;
+                    }
+                    catch (IOException)
+                    {
+                        // Skip files that can't be read
+                        continue;
+                    }
+                }
+                
+                return false;
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that all directories in the root directory have a maximum nesting depth.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="maxDepth">The maximum allowed nesting depth.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method checks that no directory in the root directory tree exceeds
+    /// the specified nesting depth. Depth is measured from the root directory
+    /// (root has depth 0, its subdirectories have depth 1, etc.).
+    /// </remarks>
+    public static IFileSystemAssertion MaxDirectoryDepth(
+        this IFileSystemAssertion assertion,
+        int maxDepth)
+    {
+        return assertion.Validate(
+            string.Empty,
+            $"Root directory contains directories deeper than {maxDepth} levels",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                
+                bool CheckDirectoryDepth(string directory, int currentDepth)
+                {
+                    if (currentDepth > maxDepth)
+                        return false;
+                    
+                    foreach (var subDir in Directory.GetDirectories(directory))
+                    {
+                        if (!CheckDirectoryDepth(subDir, currentDepth + 1))
+                            return false;
+                    }
+                    
+                    return true;
+                }
+                
+                return CheckDirectoryDepth(fullPath, 0);
+            }
+        );
+    }
+
+    /// <summary>
+    /// Asserts that the root directory follows a specific naming convention for all items.
+    /// </summary>
+    /// <param name="assertion">The <see cref="IFileSystemAssertion"/> instance.</param>
+    /// <param name="conventionValidator">A function that validates item names according to the convention.</param>
+    /// <returns>The same <see cref="IFileSystemAssertion"/> instance for method chaining.</returns>
+    /// <remarks>
+    /// This method validates that all files and directories in the root directory
+    /// follow a specific naming convention. The validator function receives each
+    /// item name and should return true if the name follows the convention.
+    /// </remarks>
+    public static IFileSystemAssertion FollowsNamingConvention(
+        this IFileSystemAssertion assertion,
+        Func<string, bool> conventionValidator)
+    {
+        return assertion.Validate(
+            string.Empty,
+            "Root directory contains items that violate the naming convention",
+            (relativePath, system) =>
+            {
+                var fullPath = Path.Combine(system.Root, relativePath);
+                var allItems = Directory.GetFileSystemEntries(fullPath)
+                    .Select(Path.GetFileName);
+                return allItems.All(conventionValidator);
             }
         );
     }

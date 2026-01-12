@@ -52,12 +52,12 @@ public sealed class FileSystemBuilder : IFileSystemBuilder
     /// </remarks>
     public IFileSystemBuilder AddRoot(string root)
     {
-        Guard.AgainstNull(root);
-        
+        Guard.AgainstNull(root,  nameof(root));
+
         if (this._root is not null)
-            throw new InvalidOperationException("Cannot add root directory twice");
-        this._root = root;
+            throw new InvalidOperationException($"Cannot add root directory twice path={root}");
         
+        this._root = root;
         return this;
     }
 
@@ -77,7 +77,7 @@ public sealed class FileSystemBuilder : IFileSystemBuilder
     /// </remarks>
     public IFileSystemBuilder Add(string rootRelativePath, Action<string, IFileSystemBuilder> additionalAction)
     {
-        Guard.AgainstNull(rootRelativePath);
+        Guard.AgainstNull(rootRelativePath, nameof(rootRelativePath));
         this._builderActions.Add(new FileSystemCreationalContent(additionalAction, rootRelativePath));
         return this;
     }
@@ -102,6 +102,9 @@ public sealed class FileSystemBuilder : IFileSystemBuilder
     /// </remarks>
     public IFileSystem Build()
     {
+        if(this.RootDirectory is null)
+            throw new InvalidOperationException("Cannot build root directory, root directory is not loaded, use AddRoot(string root) method");
+        
         Directory.CreateDirectory(this.RootDirectory);
         try
         {

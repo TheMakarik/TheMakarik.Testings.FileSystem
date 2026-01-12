@@ -80,13 +80,15 @@ public sealed class FileSystemAssertion(IFileSystem fileSystem) : IFileSystemAss
     {
         try
         {
-            return predicate(rootRelativePath, fileSystem) 
-                ? this 
-                : throw new FileSystemAssertionException(exceptionMessage);
+            if (predicate(rootRelativePath, fileSystem))
+                return this;
+
         }
         catch (Exception e)
         {
-            throw new FileSystemAssertionException("Inner exception occurred", e);
+            throw new FileSystemAssertionException("Inner exception", e);
         }
+        
+        throw new FileSystemAssertionException(exceptionMessage);
     }
 }

@@ -51,7 +51,7 @@ public static class FileSystemBuilderExtensions
     /// </remarks>
     public static IFileSystemBuilder AddRandomRootName(this IFileSystemBuilder builder)
     {
-        return builder.AddRoot(Path.GetRandomFileName());
+        return builder.AddRoot(GetRandomDirectoryName());
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public static class FileSystemBuilderExtensions
     /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
     public static IFileSystemBuilder AddRandomRootName(this IFileSystemBuilder builder, out string rootName)
     {
-        rootName = Path.GetRandomFileName();
+        rootName = GetRandomDirectoryName();
         return builder.AddRoot(rootName);
     }
     
@@ -77,7 +77,7 @@ public static class FileSystemBuilderExtensions
     /// </remarks>
     public static IFileSystemBuilder AddRandomInTempRootName(this IFileSystemBuilder builder)
     {
-        return builder.AddInTempRoot(Path.GetRandomFileName());
+        return builder.AddInTempRoot(GetRandomDirectoryName());
     }
 
     /// <summary>
@@ -88,7 +88,7 @@ public static class FileSystemBuilderExtensions
     /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
     public static IFileSystemBuilder AddRandomInTempRootName(this IFileSystemBuilder builder, out string fullPath)
     {
-        return builder.AddInTempRoot(Path.GetRandomFileName(), out  fullPath);
+        return builder.AddInTempRoot(GetRandomDirectoryName(), out  fullPath);
     }
 
     /// <summary>
@@ -357,4 +357,6 @@ public static class FileSystemBuilderExtensions
 
         return builder;
     }
+    
+    private static string GetRandomDirectoryName() => Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
 }
