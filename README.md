@@ -40,7 +40,7 @@ public sealed class Explorer : IExplorer
         if(!Directory.Exists(path))
             throw new DirectoryNotFoundException("Cannot get content from unexisting directory");
         
-        return Directory.EnumerateDirectories(path).Concat(Directory.EnumerateFiles(path));
+        return Directory.EnumerateFileSystemEntries(path);
     }
 }
 ```
@@ -53,7 +53,7 @@ using ReadMeExample;
 
 namespace ReadMeExample.Tests;
 
-public class ReadMeExampleTests
+public sealed class ReadMeExampleTests
 {
     private readonly string _mockFileFullPath;
     private readonly IFileSystem _fileSystem;
@@ -105,6 +105,11 @@ public class ReadMeExampleTests
             .ContentEquals(systemUnderTests.GetContent(_fileSystem.Root));
     }
 
+    public void Dispose()
+    {
+        //Remove the root file system's directory
+        _fileSystem.Dispose();
+    }
 }
 ```
 

@@ -83,18 +83,6 @@ public static class FileSystemBuilderZipExtensions
     /// <para>
     /// The <c>.zip</c> extension is automatically appended to <paramref name="archiveName"/> if not present.
     /// </para>
-    /// <example>
-    /// <code>
-    /// string archivePath;
-    /// var fileSystem = FileSystem.BeginBuilding()
-    ///     .AddRandomInTempRootName()
-    ///     .AddZip("data.zip", out archivePath, zipBuilder => zipBuilder
-    ///         .AddFile("readme.txt", "Archive contents"))
-    ///     .Build();
-    /// 
-    /// // archivePath contains the full path to the created zip file
-    /// </code>
-    /// </example>
     /// </remarks>
     public static IFileSystemBuilder AddZip(this IFileSystemBuilder builder, string archiveName,
         out string archiveFullPath,
@@ -125,15 +113,6 @@ public static class FileSystemBuilderZipExtensions
     /// <para>
     /// The <c>.zip</c> extension is automatically appended to each archive name if not present.
     /// </para>
-    /// <example>
-    /// <code>
-    /// var fileSystem = FileSystem.BeginBuilding()
-    ///     .AddRandomInTempRootName()
-    ///     .AddZips(["archive1.zip", "archive2.zip", "data.zip"], zipBuilder => zipBuilder
-    ///         .AddFile("info.txt", "Archive content"))
-    ///     .Build();
-    /// </code>
-    /// </example>
     /// </remarks>
     public static IFileSystemBuilder AddZips(this IFileSystemBuilder builder,
         string[] archiveNames,
@@ -169,18 +148,6 @@ public static class FileSystemBuilderZipExtensions
     /// <para>
     /// The <c>.zip</c> extension is automatically appended to each archive name if not present.
     /// </para>
-    /// <example>
-    /// <code>
-    /// string[] archivePaths;
-    /// var fileSystem = FileSystem.BeginBuilding()
-    ///     .AddRandomInTempRootName()
-    ///     .AddZips(["backup.zip", "logs.zip", "data.zip"], out archivePaths, zipBuilder => zipBuilder
-    ///         .AddFile("metadata.txt", "Created: " + DateTime.Now))
-    ///     .Build();
-    /// 
-    /// // archivePaths contains full paths to all created zip files
-    /// </code>
-    /// </example>
     /// </remarks>
     public static IFileSystemBuilder AddZips(this IFileSystemBuilder builder,
         string[] archiveNames,
