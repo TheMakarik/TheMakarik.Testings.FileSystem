@@ -10,10 +10,20 @@
         <Version>2026.0.0</Version>
         <Authors>TheMakarik, RikitavTimur</Authors>
         <Description>Simple package for creating and asserting file system at your integrational tests</Description>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/TheMakarik/TheMakarik.Testings.FileSystem</RepositoryUrl>
+        <PackageTags>Testings, Tests, FileSystem</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>
