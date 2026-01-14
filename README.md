@@ -13,6 +13,10 @@
   
 </div>
 
+## Add the package
+```bash
+dotnet add package TheMakarik.Testing.FileSystem
+```
 
 ## Quick start (<a href="https://xunit.net/?tabs=cs">xUnit.net</a>)
 #### 1. Create new project
