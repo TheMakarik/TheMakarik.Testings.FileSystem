@@ -8,7 +8,7 @@
 		<RootNamespace>TheMakarik.Testing.FileSystem</RootNamespace>
         
         <!--Package info-->
-        <Version>2026.0.0</Version>
+        <Version>2026.0.1</Version>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Authors>TheMakarik, RikitavTimur</Authors>
         <Description>Simple package for creating and asserting file system at your integrational tests</Description>
