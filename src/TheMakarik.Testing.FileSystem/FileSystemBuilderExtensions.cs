@@ -192,6 +192,8 @@ public static class FileSystemBuilderExtensions
             Directory.CreateDirectory(fullPath);
             var directoryContentBuilder = FileSystem.BeginBuilding();
             directoryContentBuilder.AddRoot(fullPath);
+            foreach (var property in builder.Properties)
+                directoryContentBuilder.Properties[property.Key] = property.Value;
             directoryContentLazyCreational.Invoke(fullPath, directoryContentBuilder);
             directoryContentBuilder.Build();
         });

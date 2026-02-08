@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using TheMakarik.Testing.FileSystem.Assertion;
+using TheMakarik.Testing.FileSystem.Core;
 
 namespace TheMakarik.Testing.FileSystem;
 
@@ -9,17 +10,13 @@ namespace TheMakarik.Testing.FileSystem;
 /// Represent default abstractions for FileSystem class
 /// </summary>
 [PublicAPI]
-public interface IFileSystem : IDisposable, IEnumerable<string>
+public interface IFileSystem : IDisposable, IEnumerable<string>, IDefaultFIleSystemEvents
 {
+    
     /// <summary>
-    /// Event that occurs then the <see cref="IFileSystem"/> instance starts disposing
+    /// Dynamic properties for extensibility
     /// </summary>
-    public event EventHandler Disposed;
-
-    /// <summary>
-    /// Events that occurs then the <see cref="IFileSystem"/> instance starts an assertion
-    /// </summary>
-    public event EventHandler AssertionStart;
+    public Dictionary<object, object> Properties { get; }
     
     /// <summary>
     /// Root file system folder's path where all <see cref="IFileSystem"/> content contains

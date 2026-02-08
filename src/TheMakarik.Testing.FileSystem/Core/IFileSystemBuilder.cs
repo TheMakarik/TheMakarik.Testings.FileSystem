@@ -11,7 +11,7 @@ namespace TheMakarik.Testing.FileSystem.Core;
 /// that can be used in isolated test environments. Implementations typically create structures
 /// in temporary locations and ensure proper cleanup.
 /// </remarks>
-public interface IFileSystemBuilder
+public interface IFileSystemBuilder : IDefaultFileSystemBuilderEvents
 {
     /// <summary>
     /// Gets the root directory path for the file system being built.
@@ -24,7 +24,10 @@ public interface IFileSystemBuilder
     /// </exception>
     string RootDirectory { get; }
 
-  
+    /// <summary>
+    /// Dynamic properties for extensibility
+    /// </summary>
+    public Dictionary<object, object> Properties { get; }
 
     /// <summary>
     /// Sets the root directory for the file system being built.

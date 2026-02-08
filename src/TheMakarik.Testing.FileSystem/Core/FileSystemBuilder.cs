@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using TheMakarik.Testing.FileSystem.Core.Events;
 using TheMakarik.Testing.FileSystem.Objects;
 
 namespace TheMakarik.Testing.FileSystem.Core;
@@ -35,9 +36,15 @@ public sealed class FileSystemBuilder : IFileSystemBuilder
     public string RootDirectory => _root ?? throw
         new InvalidOperationException("Cannot get the root directory because it is not declared, use AddRoot(path) method to declare");
 
+    /// <inheritdoc/>
+    public Dictionary<object, object> Properties { get; } = new();
+
     #endregion
 
     #region IFileSystemBuilder implementation
+
+    /// <inheritdoc/>
+    public EventHandler<ElementAddedEventArgs> Added { get; set; }
     
     /// <summary>
     /// Sets the root directory for the file system being built.
@@ -79,6 +86,7 @@ public sealed class FileSystemBuilder : IFileSystemBuilder
     {
         Guard.AgainstNull(rootRelativePath, nameof(rootRelativePath));
         this._builderActions.Add(new FileSystemCreationalContent(additionalAction, rootRelativePath));
+        Added?.Invoke(this, new ElementAddedEventArgs(){FullPath =  Path.Combine(this.RootDirectory, rootRelativePath)});
         return this;
     }
 
@@ -121,4 +129,6 @@ public sealed class FileSystemBuilder : IFileSystemBuilder
     }
     
     #endregion
+
+   
 }

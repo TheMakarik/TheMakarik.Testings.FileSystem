@@ -88,6 +88,9 @@ public sealed class FileSystem : IFileSystem
     #region IFileSystem implementation
 
     /// <inheritdoc/>
+    public Dictionary<object, object> Properties { get; } = new();
+
+    /// <inheritdoc/>
     public string Root { get; private set; }
 
     /// <inheritdoc/>

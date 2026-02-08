@@ -1,14 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <LangVersion>latest</LangVersion>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
-		<LangVersion>latest</LangVersion>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-		<RootNamespace>TheMakarik.Testing.FileSystem</RootNamespace>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        
-        <!--Package info-->
+
         <Version>2026.1.0</Version>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Authors>TheMakarik, RikitavTimur</Authors>
@@ -20,11 +16,18 @@
 
     <ItemGroup>
         <None Include="../../README.md" Pack="true" PackagePath="\"/>
-      <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
+        <None Update="icon.png">
+          <Pack>True</Pack>
+        </None>
+        <PackageReference Include="SharpCompress" Version="0.44.5" />
+        <PackageReference Include="TheMakarik.Testing.FileSystem" Version="2026.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="icon.png" Pack="true" PackagePath="" />
+        <None Update="icon.png">
+            <Pack>True</Pack>
+        </None>
     </ItemGroup>
 
 </Project>

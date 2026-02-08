@@ -1,0 +1,30 @@
+name: 'RunTests'
+on:
+  push: 
+    branches:
+      - 'dev'
+      - 'master'
+    
+env: 
+  DOTNET_VERSION: '10.0'
+
+jobs:
+  run_tests:
+    runs-on: 'windows-2022'
+  
+    steps:
+      - uses: 'actions/checkout@v4'
+        
+      - name:  "Show dotnet version"
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}} 
+        run: dotnet --version
+        shell: 'powershell'
+        
+      - name: 'Run tests'
+        with:
+           dotnet-version: ${{env.DOTNET_VERSION}}
+        run: |
+          ./RunLibraryTests.ps1
+          exit $LASTEXITCODE
+        shell: 'powershell'

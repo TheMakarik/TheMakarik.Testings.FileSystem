@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO.Compression;
 using JetBrains.Annotations;
 
@@ -14,6 +15,11 @@ public interface IZipArchiveFileSystemBuilder
     /// Gets the full path to the zip archive file.
     /// </summary>
     public string Root { get; }
+    
+    /// <summary>
+    /// Dynamic properties for extensibility
+    /// </summary>
+    public Dictionary<object, object> Properties { get; }
     
     /// <summary>
     /// Gets the current directory prefix within the zip archive.

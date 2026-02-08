@@ -78,7 +78,10 @@ public sealed class ZipArchiveFileSystemBuilder : IZipArchiveFileSystemBuilder
     /// represent an identifier rather than a physical file path.
     /// </remarks>
     public string Root { get; }
-    
+
+    /// <inheritdoc/>
+    public Dictionary<object, object> Properties { get; } = new();
+
     /// <summary>
     /// Gets the current directory prefix within the zip archive.
     /// All entry names will be prefixed with this path when added to the archive.
