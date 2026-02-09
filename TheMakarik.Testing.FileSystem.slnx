@@ -8,6 +8,7 @@
     <File Path="RunLibraryTests.ps1" />
   </Folder>
   <Folder Name="/src/">
+    <File Path=".gitignore" />
     <File Path="src\TheMakarik.Testing.FileSystem\bin\Release\TheMakarik.Testing.FileSystem.2026.0.0.nupkg" />
     <File Path="StringCounter.ps1" />
     <Project Path="src/TheMakarik.Testing.FileSystem.SharpCompress/TheMakarik.Testing.FileSystem.SharpCompress.csproj" />

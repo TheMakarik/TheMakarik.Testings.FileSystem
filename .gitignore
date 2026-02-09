@@ -57,3 +57,6 @@ TestResult.xml
 nunit-*.xml
 /.vs/TheMakarik.Testing.FileSystem.slnx
 /.vs/TheMakarik.Testings.FileSystem.slnx/v18
+
+github 
+*.pub 
