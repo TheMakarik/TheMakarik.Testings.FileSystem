@@ -21,7 +21,7 @@
           <Pack>True</Pack>
         </None>
         <PackageReference Include="SharpCompress" Version="0.44.5" />
-        <PackageReference Include="TheMakarik.Testing.FileSystem" Version="2026.1.0" />
+        <PackageReference Include="TheMakarik.Testing.FileSystem" Version="2026.1.1" />
     </ItemGroup>
 
     <ItemGroup>

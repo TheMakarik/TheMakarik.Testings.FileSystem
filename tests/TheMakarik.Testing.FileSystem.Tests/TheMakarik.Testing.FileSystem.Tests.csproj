@@ -25,7 +25,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\TheMakarik.Testing.FileSystem.SharpCompress\TheMakarik.Testing.FileSystem.SharpCompress.csproj" />
-      <ProjectReference Include="..\..\src\TheMakarik.Testing.FileSystem\TheMakarik.Testing.FileSystem.csproj" />
     </ItemGroup>
 
 </Project>

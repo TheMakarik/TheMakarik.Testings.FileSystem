@@ -92,28 +92,7 @@ public static class FileSystemBuilderExtensions
     {
         builder.Properties[NameGeneratorName] =  new NamingConfiguration()
         {
-            GenerateFunction = generationType switch
-             {
-                NameGenerationType.ExtensionAndCount => (info) => info.Extension + (info.Count == 0 ? string.Empty : $"({info.Count})"),
-                NameGenerationType.ExtensionAndExtensionCount => (info) =>
-                {
-                    var count = info.GetExtensionCount();
-                    return info.Extension + (count == 0 ? string.Empty : $"({count})");
-                },
-                NameGenerationType.RandomName => (info) => GetRandomName() + info.Extension,
-                NameGenerationType.RandomNameAndCount => (info) => GetRandomName() + info.Extension + (info.Count == 0 ? string.Empty : $"({info.Count})"),
-                NameGenerationType.RandomNameAndExtensionCount => (info) =>
-                {
-                    var count = info.GetExtensionCount();
-                    return GetRandomName() + info.Extension + (count == 0 ? string.Empty : $"({count})");
-                },
-                NameGenerationType.RandomNumber => (info) =>
-                {
-                    var random = info.RandomSeed is null ? new Random() : new Random(info.RandomSeed.Value);
-                    return random.Next(int.MinValue, int.MaxValue).ToString();
-                },
-                _ => throw new ArgumentOutOfRangeException(nameof(generationType), generationType, null)
-             }, 
+            GenerateFunction = NamingConfiguration.CreateGeneratingFunction(generationType), 
             NamingInfo = new NamingInfo(){RandomSeed = seed, RootFileSystemPath = builder.RootDirectory}
         };
         builder.Added += (sender, args) => OnAdded(builder, args.FullPath);
@@ -352,9 +331,5 @@ public static class FileSystemBuilderExtensions
         if(!builder.Properties.ContainsKey(NameGeneratorName))
             throw new InvalidOperationException("Naming Generator do not added");
     }
-
-    private static string GetRandomName()
-    {
-        return Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
-    }
+    
 }
