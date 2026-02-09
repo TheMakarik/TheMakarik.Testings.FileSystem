@@ -51,6 +51,27 @@ public static class TarFileSystemBuilderExtensions
     }
 
     /// <summary>
+    /// Adds a file entry with content from a <see cref="Stream"/> to the tar archive.
+    /// </summary>
+    /// <param name="builder">The tar builder.</param>
+    /// <param name="fileName">The file name in the archive.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="lastModified">Optional last modified date. If null, uses current date.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public static ITarFileSystemBuilder AddFile(this ITarFileSystemBuilder builder, string fileName, Stream contentStream, DateTime? lastModified = null)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        return builder.Add(fileName, context =>
+        {
+            if (contentStream.CanSeek)
+                contentStream.Position = 0;
+
+            context.Archive.Write(context.FullEntryName, contentStream, lastModified ?? DateTime.Now);
+        });
+    }
+
+    /// <summary>
     /// Adds a file entry with content and returns its relative path in the archive.
     /// </summary>
     /// <param name="builder">The tar builder.</param>
@@ -66,6 +87,24 @@ public static class TarFileSystemBuilderExtensions
     }
 
     /// <summary>
+    /// Adds a file entry with content from a <see cref="Stream"/> and returns its relative path in the archive.
+    /// </summary>
+    /// <param name="builder">The tar builder.</param>
+    /// <param name="fileName">The file name.</param>
+    /// <param name="entryRelativePath">Out relative path in archive.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="lastModified">Optional last modified date. If null, uses current date.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public static ITarFileSystemBuilder AddFile(this ITarFileSystemBuilder builder, string fileName, out string entryRelativePath, Stream contentStream, DateTime? lastModified = null)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        var dummyContext = new TarCreationalContext(fileName, null!, builder.Prefix);
+        entryRelativePath = dummyContext.FullEntryName;
+        return builder.AddFile(fileName, contentStream, lastModified);
+    }
+
+    /// <summary>
     /// Adds multiple empty file entries to the tar archive.
     /// </summary>
     /// <param name="builder">The tar builder.</param>
@@ -77,6 +116,34 @@ public static class TarFileSystemBuilderExtensions
         {
             builder.AddFile(fileName);
         }
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds multiple file entries with the same content from a <see cref="Stream"/>.
+    /// </summary>
+    /// <param name="builder">The tar builder.</param>
+    /// <param name="fileNames">Array of file names.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="lastModified">Optional last modified date. If null, uses current date.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public static ITarFileSystemBuilder AddFiles(this ITarFileSystemBuilder builder, string[] fileNames, Stream contentStream, DateTime? lastModified = null)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+
+        foreach (var fileName in fileNames)
+        {
+            builder.Add(fileName, context =>
+            {
+                using var copy = new MemoryStream(buffer, writable: false);
+                context.Archive.Write(context.FullEntryName, copy, lastModified ?? DateTime.Now);
+            });
+        }
+
         return builder;
     }
 
@@ -145,6 +212,9 @@ public static class TarFileSystemBuilderExtensions
             var nestedBuilder = new TarFileSystemBuilder(builder.Root, 
                 Path.Combine(builder.Prefix, directoryName).Replace("\\", "/"), 
                 context.Archive);
+            
+            foreach (var property in builder.Properties)
+                nestedBuilder.Properties[property.Key] = property.Value;
             
             // Вызываем пользовательскую функцию для создания содержимого
             createDirectory(nestedBuilder).Build();
@@ -224,5 +294,39 @@ public static class TarFileSystemBuilderExtensions
         {
             context.Archive.Write(context.FullEntryName, stream, lastModified ?? DateTime.Now);
         });
+    }
+
+    /// <summary>
+    /// Adds multiple file entries with the same content from a <see cref="Stream"/> and returns their relative paths.
+    /// </summary>
+    /// <param name="builder">The tar builder.</param>
+    /// <param name="fileNames">Array of file names.</param>
+    /// <param name="entriesRelativePaths">Out array of relative paths.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="lastModified">Optional last modified date. If null, uses current date.</param>
+    /// <returns>The same builder for chaining.</returns>
+    public static ITarFileSystemBuilder AddFiles(this ITarFileSystemBuilder builder, string[] fileNames, out string[] entriesRelativePaths, Stream contentStream, DateTime? lastModified = null)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        entriesRelativePaths = new string[fileNames.Length];
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+
+        for (int i = 0; i < fileNames.Length; i++)
+        {
+            var dummyContext = new TarCreationalContext(fileNames[i], null!, builder.Prefix);
+            entriesRelativePaths[i] = dummyContext.FullEntryName;
+
+            builder.Add(fileNames[i], context =>
+            {
+                using var copy = new MemoryStream(buffer, writable: false);
+                context.Archive.Write(context.FullEntryName, copy, lastModified ?? DateTime.Now);
+            });
+        }
+
+        return builder;
     }
 }

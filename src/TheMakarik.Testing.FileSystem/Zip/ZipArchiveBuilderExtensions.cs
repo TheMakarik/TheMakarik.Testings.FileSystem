@@ -56,6 +56,30 @@ public static class ZipArchiveBuilderExtensions
     }
 
     /// <summary>
+    /// Adds a file entry with content from a <see cref="Stream"/> to the zip archive.
+    /// </summary>
+    /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
+    /// <param name="fileName">The name of the file entry to add to the archive.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="compressionLevel">The compression level to use for the file entry. Default is <see cref="CompressionLevel.Optimal"/>.</param>
+    /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IZipArchiveFileSystemBuilder AddFile(this IZipArchiveFileSystemBuilder builder, string fileName, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        return builder.Add(fileName, context =>
+        {
+            var entry = context.Archive.CreateEntry(context.FullEntryName, compressionLevel);
+            using var entryStream = entry.Open();
+
+            if (contentStream.CanSeek)
+                contentStream.Position = 0;
+
+            contentStream.CopyTo(entryStream);
+        });
+    }
+
+    /// <summary>
     /// Adds a file entry with content to the zip archive and returns the relative path to the entry within the archive.
     /// </summary>
     /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
@@ -73,6 +97,25 @@ public static class ZipArchiveBuilderExtensions
     }
 
     /// <summary>
+    /// Adds a file entry with content from a <see cref="Stream"/> to the zip archive and returns the relative path to the entry within the archive.
+    /// </summary>
+    /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
+    /// <param name="fileName">The name of the file entry to add to the archive.</param>
+    /// <param name="entryRelativePath">The relative path to the entry within the zip archive.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="compressionLevel">The compression level to use for the file entry. Default is <see cref="CompressionLevel.Optimal"/>.</param>
+    /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IZipArchiveFileSystemBuilder AddFile(this IZipArchiveFileSystemBuilder builder, string fileName, out string entryRelativePath, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        var context = new ZipCreationalContext(fileName, null!, builder.Prefix);
+        entryRelativePath = context.FullEntryName;
+        
+        return builder.AddFile(fileName, contentStream, compressionLevel);
+    }
+
+    /// <summary>
     /// Adds multiple empty file entries to the zip archive.
     /// </summary>
     /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
@@ -85,6 +128,36 @@ public static class ZipArchiveBuilderExtensions
         {
             builder.AddFile(fileName, compressionLevel);
         }
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds multiple file entries with the same content from a <see cref="Stream"/> to the zip archive.
+    /// </summary>
+    /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
+    /// <param name="fileNames">The names of the file entries to add to the archive.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="compressionLevel">The compression level to use for the file entries. Default is <see cref="CompressionLevel.Optimal"/>.</param>
+    /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IZipArchiveFileSystemBuilder AddFiles(this IZipArchiveFileSystemBuilder builder, string[] fileNames, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+        
+        foreach (var fileName in fileNames)
+        {
+            builder.Add(fileName, context =>
+            {
+                var entry = context.Archive.CreateEntry(context.FullEntryName, compressionLevel);
+                using var entryStream = entry.Open();
+                using var copy = new MemoryStream(buffer, writable: false);
+                copy.CopyTo(entryStream);
+            });
+        }
+
         return builder;
     }
 
@@ -129,6 +202,42 @@ public static class ZipArchiveBuilderExtensions
     }
 
     /// <summary>
+    /// Adds multiple file entries with the same content from a <see cref="Stream"/> to the zip archive and returns their relative paths within the archive.
+    /// </summary>
+    /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
+    /// <param name="fileNames">The names of the file entries to add to the archive.</param>
+    /// <param name="entriesRelativePaths">The relative paths to the entries within the zip archive.</param>
+    /// <param name="contentStream">The stream containing file content.</param>
+    /// <param name="compressionLevel">The compression level to use for the file entries. Default is <see cref="CompressionLevel.Optimal"/>.</param>
+    /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IZipArchiveFileSystemBuilder AddFiles(this IZipArchiveFileSystemBuilder builder, string[] fileNames, out string[] entriesRelativePaths, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        entriesRelativePaths = new string[fileNames.Length];
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+        
+        for (int i = 0; i < fileNames.Length; i++)
+        {
+            var context = new ZipCreationalContext(fileNames[i], null!, builder.Prefix);
+            entriesRelativePaths[i] = context.FullEntryName;
+
+            builder.Add(fileNames[i], ctx =>
+            {
+                var entry = ctx.Archive.CreateEntry(ctx.FullEntryName, compressionLevel);
+                using var entryStream = entry.Open();
+                using var copy = new MemoryStream(buffer, writable: false);
+                copy.CopyTo(entryStream);
+            });
+        }
+
+        return builder;
+    }
+
+    /// <summary>
     /// Adds multiple file entries with the same content to the zip archive and returns their relative paths within the archive.
     /// </summary>
     /// <param name="builder">The <see cref="IZipArchiveFileSystemBuilder"/> instance.</param>
@@ -167,6 +276,10 @@ public static class ZipArchiveBuilderExtensions
         return builder.Add(directoryName, (context) =>
         {
             var directoryBuilder = new ZipArchiveFileSystemBuilder(builder.Root, context.Archive, directoryName);
+            
+            foreach (var property in builder.Properties)
+                directoryBuilder.Properties[property.Key] = property.Value;
+
             createDirectory(directoryBuilder).Build();
         });
     }

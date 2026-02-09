@@ -14,8 +14,15 @@ public class NameGeneratorTests : IDisposable
             .BeginBuilding()
             .AddRandomInTempRootName()
             .AddNameGenerator(NameGenerationType.RandomNameAndCount)
-            .AddDirectoryWithNameGenerating(out _directoryPath, (_, builder) => 
-                builder.AddFilesWithNameGeneraing(".txt",  TextFilesCount,"HelloWorld"))
+            .AddDirectoryWithNameGenerating(out _directoryPath, (_, builder) =>
+            {
+                for (var i = 0; i < TextFilesCount; i++)
+                {
+                    builder.AddFileWithNameGeneraing(".txt", "HelloWorld");
+                }
+
+                return builder;
+            })
             .Build();
     }
 

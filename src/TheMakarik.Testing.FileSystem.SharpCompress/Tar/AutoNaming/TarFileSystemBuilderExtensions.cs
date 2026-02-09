@@ -5,8 +5,6 @@ using TheMakarik.Testing.FileSystem.AutoNaming;
 
 namespace TheMakarik.Testing.FileSystem.SharpCompress.Tar.AutoNaming;
 
-// File: TarFileSystemBuilderAutoNamingExtensions.cs
-
 /// <summary>
 /// Extension methods for <see cref="ITarFileSystemBuilder"/> to support automatic name generation
 /// when adding files and directories inside a tar archive.
@@ -30,8 +28,34 @@ public static class TarFileSystemBuilderAutoNamingExtensions
     {
         builder.Properties[TarInnerGeneratorKey] = new NamingConfiguration
         {
-            GenerateFunction =
+            GenerateFunction = NamingConfiguration.CreateGeneratingFunction(type),
             NamingInfo = new NamingInfo { RandomSeed = seed }
+        };
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Resets the internal counters of the tar name generator while keeping the same strategy and seed.
+    /// </summary>
+    /// <param name="builder">The tar archive builder.</param>
+    /// <returns>The same builder for fluent chaining.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when no inner tar name generator was configured via <see cref="AddNameGenerator"/>.
+    /// </exception>
+    public static ITarFileSystemBuilder RefreshGenerator(this ITarFileSystemBuilder builder)
+    {
+        if (!builder.Properties.TryGetValue(TarInnerGeneratorKey, out var obj) || obj is not NamingConfiguration config)
+            throw new InvalidOperationException("Inner tar name generator was not added");
+
+        builder.Properties[TarInnerGeneratorKey] = new NamingConfiguration
+        {
+            GenerateFunction = config.GenerateFunction,
+            NamingInfo = new NamingInfo
+            {
+                RandomSeed = config.NamingInfo.RandomSeed,
+                Properties = config.NamingInfo.Properties
+            }
         };
 
         return builder;

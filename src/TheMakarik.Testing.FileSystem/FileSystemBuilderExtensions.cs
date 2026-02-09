@@ -164,6 +164,58 @@ public static class FileSystemBuilderExtensions
     }
 
     /// <summary>
+    /// Adds a file with content from the provided <see cref="Stream"/> at the relative path from the root.
+    /// </summary>
+    /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
+    /// <param name="contentStream">The stream whose contents will be written to the file.</param>
+    /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IFileSystemBuilder AddFile(this IFileSystemBuilder builder,
+        string rootRelativePath,
+        Stream contentStream)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+
+        return builder.Add(rootRelativePath, (fullPath, _) =>
+        {
+            using var fileStream = File.Create(fullPath);
+            fileStream.Write(buffer, 0, buffer.Length);
+        });
+    }
+
+    /// <summary>
+    /// Adds a file with content from the provided <see cref="Stream"/> and returns the full path.
+    /// </summary>
+    /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
+    /// <param name="rootRelativePath">The relative path to the file from the root directory.</param>
+    /// <param name="contentStream">The stream whose contents will be written to the file.</param>
+    /// <param name="fullPath">The full path to the created file.</param>
+    /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IFileSystemBuilder AddFile(this IFileSystemBuilder builder,
+        string rootRelativePath,
+        Stream contentStream,
+        out string fullPath)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        fullPath = Path.Combine(builder.RootDirectory, rootRelativePath);
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+
+        return builder.Add(rootRelativePath, (path, _) =>
+        {
+            using var fileStream = File.Create(path);
+            fileStream.Write(buffer, 0, buffer.Length);
+        });
+    }
+
+    /// <summary>
     /// Adds a directory at the specified relative path from the root.
     /// </summary>
     /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
@@ -355,6 +407,72 @@ public static class FileSystemBuilderExtensions
             filesFullPaths[i] = fullPath;
 
             builder.AddFile(relativePath, content);
+        }
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds multiple files with the same content from a <see cref="Stream"/> at the specified relative paths from the root.
+    /// </summary>
+    /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
+    /// <param name="filesRelativeNames">Array of relative file paths from the root directory.</param>
+    /// <param name="contentStream">The stream whose contents will be written to all files.</param>
+    /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IFileSystemBuilder AddFiles(this IFileSystemBuilder builder,
+        string[] filesRelativeNames,
+        Stream contentStream)
+    {
+        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+
+        foreach (var relativeName in filesRelativeNames)
+        {
+            builder.Add(relativeName, (fullPath, _) =>
+            {
+                using var fileStream = File.Create(fullPath);
+                fileStream.Write(buffer, 0, buffer.Length);
+            });
+        }
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds multiple files with the same content from a <see cref="Stream"/> and returns their full paths.
+    /// </summary>
+    /// <param name="builder">The <see cref="IFileSystemBuilder"/> instance.</param>
+    /// <param name="filesRelativeNames">Array of relative file paths from the root directory.</param>
+    /// <param name="contentStream">The stream whose contents will be written to all files.</param>
+    /// <param name="filesFullPaths">Array of full paths to the created files.</param>
+    /// <returns>The same <see cref="IFileSystemBuilder"/> instance for method chaining.</returns>
+    public static IFileSystemBuilder AddFiles(this IFileSystemBuilder builder,
+        string[] filesRelativeNames,
+        Stream contentStream,
+        out string[] filesFullPaths)
+    {
+        ArgumentNullException.ThrowIfNull(contentStream);
+
+        filesFullPaths = new string[filesRelativeNames.Length];
+
+        using var memory = new MemoryStream();
+        contentStream.CopyTo(memory);
+        var buffer = memory.ToArray();
+
+        for (var i = 0; i < filesRelativeNames.Length; i++)
+        {
+            var relativePath = filesRelativeNames[i];
+            var fullPath = Path.Combine(builder.RootDirectory, relativePath);
+            filesFullPaths[i] = fullPath;
+
+            builder.Add(relativePath, (path, _) =>
+            {
+                using var fileStream = File.Create(path);
+                fileStream.Write(buffer, 0, buffer.Length);
+            });
         }
 
         return builder;
