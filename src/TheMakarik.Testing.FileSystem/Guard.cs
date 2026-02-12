@@ -6,6 +6,7 @@ namespace TheMakarik.Testing.FileSystem;
 /// <summary>
 /// A simple guard that throws exceptions
 /// </summary>
+[Obsolete("Use ArgumentNullException.ThrowIfNull(value) instead")]
 internal static class Guard
 {
     /// <summary>

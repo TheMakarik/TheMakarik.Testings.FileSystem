@@ -1,6 +1,11 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADirectory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Faf50577ae40847a59e0b010588d7d127d2b08_003F43_003Fb944e068_003FDirectory_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADirectory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Faf50577ae40847a59e0b010588d7d127d2b08_003F43_003Fb944e068_003FDirectory_002Ecs_002Fz_003A2_002D1/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADirectory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fc6b39c42296a4ef9a199dfaa5b6bb815ed7508_003Fe1_003F8212a3fb_003FDirectory_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADirectory_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fc6b39c42296a4ef9a199dfaa5b6bb815ed7508_003Fe1_003F8212a3fb_003FDirectory_002Ecs_002Fz_003A2_002D1/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AEnumerable_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F8cfea5bd94fd46d7b0a8d64fe07faa2b7f30_003Fd9_003F3dcc7d97_003FEnumerable_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AException_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F94e5a9ba04d74002870fbeeec71ff78cca738_003Fd2_003Fd22f865d_003FException_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AFileSystem_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fc6b39c42296a4ef9a199dfaa5b6bb815ed7508_003F51_003F4ba691aa_003FFileSystem_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ALateBoundTestFramework_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003Ff9878f643c2ecf1b4ce73234de56c9754a451c835620eae85ca8babbcb5889c4_003FLateBoundTestFramework_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ANamingConfiguration_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002Econfig_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003Fc139449c6db2487eae69bfbff40ac443ba00_003Fdf_003Fef711e90_003FNamingConfiguration_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASafeFileHandle_002EWindows_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F261ea83c988816e3d8fe76b15b7ac6c10af64b8f9e739854f83c137c8ba9_003FSafeFileHandle_002EWindows_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
@@ -57,12 +62,15 @@
     &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ReadMeExample.GetContent_FromRoot_ReturnsRootContent&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7222302a_002D295b_002D420b_002D9d85_002D8140847abd40/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TarArchive_MustBeRecognizedAsTar" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests.TarArchive_MustBeRecognizedAsTar&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests.TarBz2Archive_MustBeRecognizedAsBzip2&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests.TarGzArchive_MustBeRecognizedAsGzip&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7222302a_002D295b_002D420b_002D9d85_002D8140847abd40/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TarArchive_MustBeRecognizedAsTar" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;TestAncestor&gt;
+      &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests.TarArchive_MustBeRecognizedAsTar&lt;/TestId&gt;
+      &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests.TarBz2Archive_MustBeRecognizedAsBzip2&lt;/TestId&gt;
+      &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests.TarGzArchive_MustBeRecognizedAsGzip&lt;/TestId&gt;
+    &lt;/TestAncestor&gt;
+    &lt;Project Location="/home/themakarik/RiderProjects/TheMakarik.Testings.FileSystem/examples/Examples.NUnit3" Presentation="&amp;lt;examples&amp;gt;\&amp;lt;Examples.NUnit3&amp;gt;" /&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7bc5df40_002Dde10_002D405c_002D8609_002Dda25f7c7fcc6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddFile_AfterBuilding_CreatedFileMustExists #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
@@ -156,6 +164,11 @@
     &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net8.0::Examples.xUnit.ReadMeExample.GetContent_FromRoot_ReturnsRootContent&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d07cd5b5_002D7845_002D4606_002Db528_002D8764a7f97b8a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Tar_AutoNaming_ShouldCreateExpectedEntries" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;NUnit3x::933E6079-A48B-46EC-1B41-59A84CEB47E5::net10.0::Examples.NUnit3.TarAutoNaming&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=df58d91d_002Dfb97_002D427b_002D8665_002D83d2cc7ccce5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddFile_AfterBuilding_CreatedFileMustExists #6" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net8.0::TheMakarik.Testing.FileSystem.Tests.FileCreationalTests.AddFile_AfterBuilding_CreatedFileMustExists&lt;/TestId&gt;
@@ -170,9 +183,13 @@
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f190a845_002D7ee3_002D4ff4_002Daa4e_002D84e76b18ac1b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AutoNaming" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net10.0::Examples.xUnit.AutoNaming&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+  &lt;Or&gt;
+    &lt;TestAncestor&gt;
+      &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net10.0::Examples.xUnit.AutoNaming&lt;/TestId&gt;
+      &lt;TestId&gt;NUnit3x::933E6079-A48B-46EC-1B41-59A84CEB47E5::net10.0::Examples.NUnit3.TarAutoNaming&lt;/TestId&gt;
+    &lt;/TestAncestor&gt;
+    &lt;Project Location="/home/themakarik/RiderProjects/TheMakarik.Testings.FileSystem/examples/Examples.xUnit" Presentation="&amp;lt;examples&amp;gt;\&amp;lt;Examples.xUnit&amp;gt;" /&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f246edb9_002Dde92_002D4f36_002D81f7_002D131a15953136/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="AddFile_AfterBuilding_CreatedFileMustExists #9" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
@@ -196,10 +213,15 @@
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f75a310a_002Dc777_002D4be1_002Dbc65_002Da9e26e277819/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ReadMeExample #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net10.0::Examples.xUnit.AutoNaming&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.NameGeneratorTests&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f75a310a_002Dc777_002D4be1_002Dbc65_002Da9e26e277819/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ReadMeExample #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Or&gt;
+    &lt;TestAncestor&gt;
+      &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net10.0::Examples.xUnit.AutoNaming&lt;/TestId&gt;
+      &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.NameGeneratorTests&lt;/TestId&gt;
+      &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests&lt;/TestId&gt;
+    &lt;/TestAncestor&gt;
+    &lt;Project Location="/home/themakarik/RiderProjects/TheMakarik.Testings.FileSystem/examples/Examples.NUnit3" Presentation="&amp;lt;examples&amp;gt;\&amp;lt;Examples.NUnit3&amp;gt;" /&gt;
+    &lt;Project Location="/home/themakarik/RiderProjects/TheMakarik.Testings.FileSystem/tests/TheMakarik.Testing.FileSystem.Tests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;TheMakarik.Testing.FileSystem.Tests&amp;gt;" /&gt;
+    &lt;Project Location="/home/themakarik/RiderProjects/TheMakarik.Testings.FileSystem/examples/Examples.xUnit" Presentation="&amp;lt;examples&amp;gt;\&amp;lt;Examples.xUnit&amp;gt;" /&gt;
+  &lt;/Or&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

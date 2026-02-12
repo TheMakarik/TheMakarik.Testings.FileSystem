@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using SharpCompress.Archives;
 using SharpCompress.Archives.Tar;
 using TheMakarik.Testing.FileSystem.Assertion;
@@ -22,15 +23,14 @@ public static class FileSystemAssertionExtensions
     /// </remarks>
     public static IFileSystemAssertion ShouldTar(this IFileSystem fileSystem, string rootRelativeTarArchiveName)
     {
-        var tarPath = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(Path.GetRandomFileName()), rootRelativeTarArchiveName);
-        var outputDirectory = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+        var tarPath = Path.Combine(fileSystem.Root, rootRelativeTarArchiveName);
+        var outputDirectory = Path.Combine(Path.GetTempPath(),
+            Path.GetFileNameWithoutExtension(Path.GetRandomFileName()));
 
         using var archive = TarArchive.Open(tarPath);
-        archive.WriteToDirectory(tarPath);
-
-        var extractedFileSystem = new FileSystem(outputDirectory);
-        fileSystem.Disposed += (_, _) => extractedFileSystem.Dispose();
-
-        return new FileSystemAssertion(extractedFileSystem);
+        archive.ExtractAllTo(outputDirectory);
+        
+        var system = new FileSystem(outputDirectory);
+        return system.Should();
     }
 }

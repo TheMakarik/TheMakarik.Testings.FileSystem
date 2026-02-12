@@ -9,7 +9,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         
         <!--Package info-->
-        <Version>2026.1.2</Version>
+        <Version>2026.1.4</Version>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Authors>TheMakarik, RikitavTimur</Authors>
         <Description>Simple package for creating and asserting file system at your integrational tests</Description>

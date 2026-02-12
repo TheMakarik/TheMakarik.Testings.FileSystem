@@ -129,7 +129,7 @@ public static class TarFileSystemBuilderExtensions
     /// <returns>The same builder for chaining.</returns>
     public static ITarFileSystemBuilder AddFiles(this ITarFileSystemBuilder builder, string[] fileNames, Stream contentStream, DateTime? lastModified = null)
     {
-        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+        ArgumentNullException.ThrowIfNull(contentStream);
 
         using var memory = new MemoryStream();
         contentStream.CopyTo(memory);
@@ -197,18 +197,15 @@ public static class TarFileSystemBuilderExtensions
     {
         return builder.Add(directoryName, context =>
         {
-            // В TAR директории представлены как файлы с "/" в конце
             var directoryPath = context.FullEntryName;
             if (!directoryPath.EndsWith("/"))
             {
                 directoryPath += "/";
             }
             
-            // Добавляем запись директории (пустой поток)
             using var emptyStream = new MemoryStream();
-            context.Archive.Write(directoryPath, emptyStream, DateTime.Now);
+            context.Archive.WriteDirectory(directoryPath, DateTime.Now);
             
-            // Создаем вложенный билдер для содержимого директории
             var nestedBuilder = new TarFileSystemBuilder(builder.Root, 
                 Path.Combine(builder.Prefix, directoryName).Replace("\\", "/"), 
                 context.Archive);
@@ -216,7 +213,6 @@ public static class TarFileSystemBuilderExtensions
             foreach (var property in builder.Properties)
                 nestedBuilder.Properties[property.Key] = property.Value;
             
-            // Вызываем пользовательскую функцию для создания содержимого
             createDirectory(nestedBuilder).Build();
         });
     }
@@ -234,9 +230,7 @@ public static class TarFileSystemBuilderExtensions
         var dummyContext = new TarCreationalContext(directoryName, null!, builder.Prefix);
         directoryRelativePath = dummyContext.FullEntryName;
         if (!directoryRelativePath.EndsWith("/"))
-        {
             directoryRelativePath += "/";
-        }
         return builder.AddDirectory(directoryName, createDirectory);
     }
 
@@ -315,7 +309,7 @@ public static class TarFileSystemBuilderExtensions
         contentStream.CopyTo(memory);
         var buffer = memory.ToArray();
 
-        for (int i = 0; i < fileNames.Length; i++)
+        for (var i = 0; i < fileNames.Length; i++)
         {
             var dummyContext = new TarCreationalContext(fileNames[i], null!, builder.Prefix);
             entriesRelativePaths[i] = dummyContext.FullEntryName;

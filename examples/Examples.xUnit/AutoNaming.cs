@@ -13,8 +13,8 @@ public class AutoNaming : IDisposable
         _fileSystem = FileSystem.BeginBuilding()
             .AddRandomInTempRootName()
             .AddNameGenerator(NameGenerationType.RandomNameAndCount)
-            .AddFilesWithNameGeneraing(".txt", 30, "Hello World!")
-            .AddFilesWithNameGeneraing(".json", 100)
+            .AddFilesWithNameGenerating(".txt", 30, "Hello World!")
+            .AddFilesWithNameGenerating(".json", 100)
             .AddDirectoryWithNameGenerating((path, builder) => builder
                 .RefreshNameGenerator()
                 .AddFileWithNameGeneraing(".db"))

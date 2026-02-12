@@ -120,7 +120,7 @@ public static class ZipArchiveFileSystemBuilderAutoNamingExtensions
     }
 
     /// <summary>
-    /// Adds a directory with automatic name generation and returns its relative path.
+    /// Adds a directory with automatic name generation and returns its relative to path.
     /// </summary>
     public static IZipArchiveFileSystemBuilder AddDirectoryWithNameGenerating(
         this IZipArchiveFileSystemBuilder builder,
@@ -139,7 +139,7 @@ public static class ZipArchiveFileSystemBuilderAutoNamingExtensions
     private static string GenerateInnerName(IZipArchiveFileSystemBuilder builder, string extension)
     {
         if (!builder.Properties.TryGetValue(ZipInnerGeneratorKey, out var obj) || obj is not NamingConfiguration config)
-            throw new InvalidOperationException("Inner zip name generator was not added");
+            throw new InvalidOperationException("Zip name generator was not added");
 
         config.NamingInfo.Extension = extension;
         return config.GenerateFunction(config.NamingInfo);

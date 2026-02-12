@@ -176,7 +176,7 @@ public static class FileSystemBuilderExtensions
     /// <para>Each file gets unique name based on current generator state. Counter increments automatically.</para>
     /// <para><b>Performance note:</b> Optimized for bulk creation - generates all names first, then adds files in batch.</para>
     /// </remarks>
-    public static IFileSystemBuilder AddFilesWithNameGeneraing(this IFileSystemBuilder builder, string extension, int count, string? content = null)
+    public static IFileSystemBuilder AddFilesWithNameGenerating(this IFileSystemBuilder builder, string extension, int count, string? content = null)
     {
         var names = new string[count];
         for(var i = 0; i < count; i++)
@@ -199,7 +199,7 @@ public static class FileSystemBuilderExtensions
     /// <param name="content">Same content for all files (or <see langword="null"/> for empty).</param>
     /// <returns>The same <paramref name="builder"/> instance for fluent chaining.</returns>
     /// <exception cref="InvalidOperationException">Thrown when no name generator was added.</exception>
-    public static IFileSystemBuilder AddFilesWithNameGeneraing(this IFileSystemBuilder builder, string extension,  out string[] fullPaths, int count, string? content = null)
+    public static IFileSystemBuilder AddFilesWithNameGenerating(this IFileSystemBuilder builder, string extension,  out string[] fullPaths, int count, string? content = null)
     {
         var names = new string[count];
         for(var i = 0; i < count; i++)

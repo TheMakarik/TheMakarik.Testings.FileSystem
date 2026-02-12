@@ -65,7 +65,7 @@ public static class ZipArchiveBuilderExtensions
     /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
     public static IZipArchiveFileSystemBuilder AddFile(this IZipArchiveFileSystemBuilder builder, string fileName, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
     {
-        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+        ArgumentNullException.ThrowIfNull(contentStream);
 
         return builder.Add(fileName, context =>
         {
@@ -107,7 +107,7 @@ public static class ZipArchiveBuilderExtensions
     /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
     public static IZipArchiveFileSystemBuilder AddFile(this IZipArchiveFileSystemBuilder builder, string fileName, out string entryRelativePath, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
     {
-        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+        ArgumentNullException.ThrowIfNull(contentStream);
 
         var context = new ZipCreationalContext(fileName, null!, builder.Prefix);
         entryRelativePath = context.FullEntryName;
@@ -141,7 +141,7 @@ public static class ZipArchiveBuilderExtensions
     /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
     public static IZipArchiveFileSystemBuilder AddFiles(this IZipArchiveFileSystemBuilder builder, string[] fileNames, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
     {
-        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+        ArgumentNullException.ThrowIfNull(contentStream);
 
         using var memory = new MemoryStream();
         contentStream.CopyTo(memory);
@@ -173,7 +173,7 @@ public static class ZipArchiveBuilderExtensions
     {
         entriesRelativePaths = new string[fileNames.Length];
         
-        for (int i = 0; i < fileNames.Length; i++)
+        for (var i = 0; i < fileNames.Length; i++)
         {
             var context = new ZipCreationalContext(fileNames[i], null!, builder.Prefix);
             entriesRelativePaths[i] = context.FullEntryName;
@@ -212,7 +212,7 @@ public static class ZipArchiveBuilderExtensions
     /// <returns>The same <see cref="IZipArchiveFileSystemBuilder"/> instance for method chaining.</returns>
     public static IZipArchiveFileSystemBuilder AddFiles(this IZipArchiveFileSystemBuilder builder, string[] fileNames, out string[] entriesRelativePaths, Stream contentStream, CompressionLevel compressionLevel = CompressionLevel.Optimal)
     {
-        if (contentStream is null) throw new ArgumentNullException(nameof(contentStream));
+        ArgumentNullException.ThrowIfNull(contentStream);
 
         entriesRelativePaths = new string[fileNames.Length];
 
@@ -220,7 +220,7 @@ public static class ZipArchiveBuilderExtensions
         contentStream.CopyTo(memory);
         var buffer = memory.ToArray();
         
-        for (int i = 0; i < fileNames.Length; i++)
+        for (var i = 0; i < fileNames.Length; i++)
         {
             var context = new ZipCreationalContext(fileNames[i], null!, builder.Prefix);
             entriesRelativePaths[i] = context.FullEntryName;
@@ -250,7 +250,7 @@ public static class ZipArchiveBuilderExtensions
     {
         entriesRelativePaths = new string[fileNames.Length];
         
-        for (int i = 0; i < fileNames.Length; i++)
+        for (var i = 0; i < fileNames.Length; i++)
         {
             var context = new ZipCreationalContext(fileNames[i], null!, builder.Prefix);
             entriesRelativePaths[i] = context.FullEntryName;
@@ -328,7 +328,7 @@ public static class ZipArchiveBuilderExtensions
     {
         directoriesRelativePaths = new string[directoryNames.Length];
         
-        for (int i = 0; i < directoryNames.Length; i++)
+        for (var i = 0; i < directoryNames.Length; i++)
         {
             var context = new ZipCreationalContext(directoryNames[i], null!, builder.Prefix);
             directoriesRelativePaths[i] = context.FullEntryName;
