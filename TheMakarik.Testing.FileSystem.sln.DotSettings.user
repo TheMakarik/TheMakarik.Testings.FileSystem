@@ -18,7 +18,7 @@
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.NameGeneratorTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0bc4a07c_002D9cf9_002D4a5f_002Dbc9c_002D9a56a72869b1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsLocked="True" Name="ContnetFile_MustHaveContent" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0bc4a07c_002D9cf9_002D4a5f_002Dbc9c_002D9a56a72869b1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" IsLocked="True" Name="ContnetFile_MustHaveContent" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net8.0::TheMakarik.Testing.FileSystem.Tests.FileCreationalTests.AddFile_AfterBuilding_CreatedFileMustExists&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net8.0::TheMakarik.Testing.FileSystem.Tests.FileCreationalTests.AddFileWithContent_AfterBuilding_CreatedFileMustHasContent&lt;/TestId&gt;
@@ -213,7 +213,7 @@
     &lt;TestId&gt;xUnit::F08C2711-EE82-B7C3-F409-2BA7E72991AF::net10.0::TheMakarik.Testing.FileSystem.Tests.TarFileSystemBuilderTests&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f75a310a_002Dc777_002D4be1_002Dbc65_002Da9e26e277819/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ReadMeExample #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=f75a310a_002Dc777_002D4be1_002Dbc65_002Da9e26e277819/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ReadMeExample #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Or&gt;
     &lt;TestAncestor&gt;
       &lt;TestId&gt;xUnit::8134F4C4-F835-CE5E-A07A-E08D8D7628BB::net10.0::Examples.xUnit.AutoNaming&lt;/TestId&gt;
